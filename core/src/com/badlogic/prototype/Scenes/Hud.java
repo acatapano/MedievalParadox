@@ -14,6 +14,8 @@ import com.badlogic.prototype.Prototype;
 
 public class Hud implements Disposable{
 
+    // Hello this is a comment
+
     //Scene2D.ui Stage and its own Viewport for HUD
     public Stage stage;
     private Viewport viewport;
