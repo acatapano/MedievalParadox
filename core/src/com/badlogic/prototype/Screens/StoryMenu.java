@@ -21,7 +21,7 @@ public class StoryMenu implements Screen
     {
         this.game = game;
 
-        backgroundTex = new Texture(Gdx.files.internal("background/story_controls.png"));
+        backgroundTex = new Texture(Gdx.files.internal("story_controls.png"));
         backgroundSprite = new Sprite(backgroundTex);
         backgroundSprite.setSize(640, 500);
         backgroundSprite.setPosition(0, 0);

@@ -21,7 +21,7 @@ public class ControlsMenu implements Screen
     {
         this.game = game;
 
-        backgroundTex = new Texture(Gdx.files.internal("background/story_controls.png"));
+        backgroundTex = new Texture(Gdx.files.internal("story_controls.png"));
         backgroundSprite = new Sprite(backgroundTex);
         backgroundSprite.setSize(640, 500);
         backgroundSprite.setPosition(0, 0);
@@ -69,7 +69,7 @@ public class ControlsMenu implements Screen
         // end batch
 
         if (Gdx.input.justTouched()) {
-            game.setScreen(new PlayScreen(game));
+            game.setScreen(new Level1(game));
             dispose();
         }
         // press Esc to go back to story screen

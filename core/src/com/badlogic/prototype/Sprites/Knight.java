@@ -9,15 +9,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.prototype.Prototype;
-import com.badlogic.prototype.Screens.PlayScreen;
+import com.badlogic.prototype.Screens.Level1;
 import com.badlogic.prototype.Sprites.TileObjects.InteractiveTileObject;
 
 public class Knight extends Sprite {
@@ -52,9 +49,9 @@ public class Knight extends Sprite {
     private float stateTimer;
     private boolean runningRight;
     private boolean knightIsDead;
-    private PlayScreen screen;
+    private Level1 screen;
 
-    public Knight(PlayScreen screen){
+    public Knight(Level1 screen){
         //initialize default values
         this.screen = screen;
         this.world = screen.getWorld();

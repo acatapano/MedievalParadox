@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.prototype.Screens.MainMenu;
-import com.badlogic.prototype.Screens.PlayScreen;
 
 public class Prototype extends Game {
 	//Virtual Screen size and Box2D Scale(Pixels Per Meter)

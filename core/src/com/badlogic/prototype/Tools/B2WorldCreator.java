@@ -10,12 +10,12 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.prototype.Prototype;
-import com.badlogic.prototype.Screens.PlayScreen;
+import com.badlogic.prototype.Screens.Level1;
 import com.badlogic.prototype.Sprites.TileObjects.Spike;
 
 public class B2WorldCreator {
 
-    public B2WorldCreator(PlayScreen screen){
+    public B2WorldCreator(Level1 screen){
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
         //create body and fixture variables
