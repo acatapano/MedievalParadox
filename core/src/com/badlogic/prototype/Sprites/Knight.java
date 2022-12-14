@@ -74,7 +74,7 @@ public class Knight extends Sprite {
         runningFrames = textureAtlas.findRegions("run");
         runningAnimation = new Animation(1/10f, runningFrames);
         walkingFrames = textureAtlas.findRegions("walk");
-        walkingAnimation = new Animation(1/10, walkingFrames);
+        walkingAnimation = new Animation(1/10f, walkingFrames); //f was missing here, fixed
 
         setScale(3f);
 

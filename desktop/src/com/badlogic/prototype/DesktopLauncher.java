@@ -12,5 +12,3 @@ public class DesktopLauncher {
 		new Lwjgl3Application(new Prototype(), config);
 	}
 }
-
-//test
