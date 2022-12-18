@@ -31,11 +31,11 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Knight) fixB.getUserData()).hitEnemy((Enemy)fixA.getUserData());
                 break;
-            case Prototype.ENEMY_BIT | Prototype.SPIKE_BIT:
+            case Prototype.ENEMY_BIT | Prototype.SPIKE_BIT | Prototype.BARRIER_BIT:
                 if(fixA.getFilterData().categoryBits == Prototype.ENEMY_BIT)
                     ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 else
-                    ((Enemy) fixB.getUserData()).reverseVelocity(true, false);
+                    ((Enemy) fixA.getUserData()).reverseVelocity(true, false);
                 break;
             case Prototype.ENEMY_BIT | Prototype.ENEMY_BIT:
                 ((Enemy)fixA.getUserData()).hitByEnemy((Enemy)fixB.getUserData());

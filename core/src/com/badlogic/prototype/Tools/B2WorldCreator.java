@@ -52,6 +52,21 @@ public class B2WorldCreator {
             tanks.add(new Tank(screen,rect.getX() / Prototype.PPM, rect.getY() / Prototype.PPM));
         }
 
+        for(MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / Prototype.PPM, (rect.getY() + rect.getHeight() / 2) / Prototype.PPM);
+
+            body = world.createBody(bdef);
+
+            shape.setAsBox(rect.getWidth() / 2 / Prototype.PPM, rect.getHeight() / 2 / Prototype.PPM);
+            fdef.filter.categoryBits = Prototype.BARRIER_BIT;
+            fdef.filter.maskBits = Prototype.ENEMY_BIT;
+            body.createFixture(fdef).setUserData(this);
+            // body.createFixture(fdef);
+        }
+
     }
 
     public Array<Tank> getTanks(){

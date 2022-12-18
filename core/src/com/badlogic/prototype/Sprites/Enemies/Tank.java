@@ -45,6 +45,7 @@ public class Tank extends com.badlogic.prototype.Sprites.Enemies.Enemy{
         idleFrames = atlas.findRegions("idle");
         idleAnimation = new Animation(1/4, idleFrames);
 
+        setScale(1.5f);
         stateTimer = 0;
         setBounds(getX(),getY(),32/Prototype.PPM,32/ Prototype.PPM);
         setToDestroy = false;
@@ -61,7 +62,7 @@ public class Tank extends com.badlogic.prototype.Sprites.Enemies.Enemy{
         }
         else if(!destroyed){
             b2body.setLinearVelocity(velocity);
-            setPosition(b2body.getPosition().x - getWidth()/2,b2body.getPosition().y - getHeight()/2);
+            setPosition(b2body.getPosition().x - getWidth()/1.3f, b2body.getPosition().y - .1f);
             setRegion(getFrame(elapsedTime, dt));
         }
     }
@@ -104,17 +105,18 @@ public class Tank extends com.badlogic.prototype.Sprites.Enemies.Enemy{
     @Override
     protected void defineEnemy(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(getX() - 1,getY() - 0.55f);
+        bdef.position.set(getX() - 2,getY() - 0.55f);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(10/ Prototype.PPM,7/ Prototype.PPM);
+        shape.setAsBox(15/ Prototype.PPM,8/ Prototype.PPM);
         fdef.filter.categoryBits = Prototype.ENEMY_BIT;
         fdef.filter.maskBits = Prototype.GROUND_BIT |
                 Prototype.SPIKE_BIT |
                 Prototype.KNIGHT_BIT |
+                Prototype.BARRIER_BIT |
                 Prototype.ENEMY_BIT;
 
         fdef.shape = shape;
