@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.prototype.Prototype;
 import com.badlogic.prototype.Scenes.Hud;
+import com.badlogic.prototype.Sprites.Enemies.Enemy;
 import com.badlogic.prototype.Sprites.Knight;
 import com.badlogic.prototype.Tools.B2WorldCreator;
 import com.badlogic.prototype.Tools.WorldContactListener;
@@ -105,7 +106,9 @@ public class Level1 implements Screen{
         world.step(1 / 60f, 6, 2);
 
         player.update(elapsedTime, dt);
-
+        for(Enemy enemy : creator.getEnemies()){
+            enemy.update(elapsedTime, dt);
+        }
         hud.update(dt);
 
         //attach gamecam to player's x coordinate
@@ -133,11 +136,14 @@ public class Level1 implements Screen{
         renderer.render();
 
         //renderer Box2DDebug lines
-        //b2dr.render(world, gamecam.combined);
+        b2dr.render(world, gamecam.combined);
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         player.draw(game.batch);
+        for(Enemy enemy : creator.getEnemies()){
+            enemy.draw(game.batch);
+        }
         game.batch.end();
 
         //Set batch to draw what the Hud camera sees.

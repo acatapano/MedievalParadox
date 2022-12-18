@@ -14,7 +14,9 @@ public class Prototype extends Game {
 	//Box2D Collision Bits
 	public static final short GROUND_BIT = 1;
 	public static final short KNIGHT_BIT = 2;
-	public static final short SPIKE_BIT = 64;
+	public static final short SPIKE_BIT = 32;
+	public static final short ENEMY_BIT = 64;
+	public static final short BARRIER_BIT = 128;
 
 	public SpriteBatch batch;
 
