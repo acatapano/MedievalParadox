@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.prototype.Prototype;
 import com.badlogic.prototype.Screens.Level1;
+import com.badlogic.prototype.Sprites.Enemies.Enemy;
 import com.badlogic.prototype.Sprites.TileObjects.InteractiveTileObject;
 
 public class Knight extends Sprite {
@@ -203,7 +204,8 @@ public class Knight extends Sprite {
         shape.setAsBox(7/ Prototype.PPM,13/ Prototype.PPM);
         fdef.filter.categoryBits = Prototype.KNIGHT_BIT;
         fdef.filter.maskBits = Prototype.GROUND_BIT |
-                Prototype.SPIKE_BIT;
+                Prototype.SPIKE_BIT |
+                Prototype.ENEMY_BIT;
         fdef.shape = shape;
         fdef.friction = .5f;
         b2body.createFixture(fdef).setUserData(this);
@@ -218,4 +220,6 @@ public class Knight extends Sprite {
     public void hit(InteractiveTileObject spike){
         die();
     }
+
+    public void hitEnemy(Enemy enemy) { die(); }
 }

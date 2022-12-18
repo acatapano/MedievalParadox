@@ -9,11 +9,15 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.prototype.Prototype;
 import com.badlogic.prototype.Screens.Level1;
+import com.badlogic.prototype.Sprites.Enemies.Enemy;
+import com.badlogic.prototype.Sprites.Enemies.Tank;
 import com.badlogic.prototype.Sprites.TileObjects.Spike;
 
 public class B2WorldCreator {
+    public Array<Tank> tanks;
 
     public B2WorldCreator(Level1 screen){
         World world = screen.getWorld();
@@ -42,6 +46,21 @@ public class B2WorldCreator {
             new Spike(screen, object);
         }
 
+        tanks = new Array<Tank>();
+        for(MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            tanks.add(new Tank(screen,rect.getX() / Prototype.PPM, rect.getY() / Prototype.PPM));
+        }
+
     }
 
+    public Array<Tank> getTanks(){
+        return tanks;
+    }
+
+    public Array<Enemy> getEnemies(){
+        Array<Enemy> enemies = new Array<Enemy>();
+        enemies.addAll(tanks);
+        return enemies;
+    }
 }
