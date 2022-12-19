@@ -106,7 +106,7 @@ public class Knight extends Sprite {
         setRegion(getFrame(elapsedTime, dt));
     }
 
-    // FIX DEATH ANIMATION
+    // TODO: FIX DEATH ANIMATION
     public TextureRegion getFrame(float elapsedTime, float dt){
         //get knight's current state. ie. jumping, running, standing...
         currentState = getState();

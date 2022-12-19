@@ -22,7 +22,8 @@ import com.badlogic.prototype.Tools.B2WorldCreator;
 import com.badlogic.prototype.Tools.WorldContactListener;
 
 //public class Level1 implements Screen{
-public class Level1 extends com.badlogic.prototype.Screens.Level{
+public class Level1 extends com.badlogic.prototype.Screens.Level
+{
     //Reference to Game, used to set Screens
     private Prototype game;
 
@@ -46,7 +47,8 @@ public class Level1 extends com.badlogic.prototype.Screens.Level{
 
     private float elapsedTime;
 
-    public Level1(Prototype game){
+    public Level1(Prototype game)
+    {
         this.game = game;
         //create cam to follow knight through level
         gamecam = new OrthographicCamera();

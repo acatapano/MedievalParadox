@@ -25,18 +25,19 @@ import com.badlogic.prototype.Scenes.Hud;
 import com.badlogic.prototype.Sprites.Enemies.Enemy;
 import com.badlogic.prototype.Sprites.Knight;
 import com.badlogic.prototype.Tools.B2WorldCreator;
+import com.badlogic.prototype.Tools.TileObjectParseUtil;
 import com.badlogic.prototype.Tools.WorldContactListener;
 
-public class Level3 implements Screen
+public class Level3 extends com.badlogic.prototype.Screens.Level implements Screen
 {
     private Prototype game;
 
-    private boolean debugOn = false;
+    private boolean debugOn = true;
 
     private OrthographicCamera camera;
     private final float SCALE = 2.0f;
 
-    //private Hud hud;
+    private Hud hud;
 
     // tile map stuff
     private TiledMap map;
@@ -46,12 +47,9 @@ public class Level3 implements Screen
     private Box2DDebugRenderer b2dr;
 
     // sprites
-    //private Knight player;
-
-    // ^ must fix Knight class before we can add the player
+    private Knight player;
 
     private float elapsedTime;
-
 
     public Level3(Prototype game)
     {
@@ -71,6 +69,9 @@ public class Level3 implements Screen
         map = new TmxMapLoader().load("Level3/Level3.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
 
+        // load the tile map collision layer
+        TileObjectParseUtil.parseTiledObjLayer(world, map.getLayers().get("Collision Layer").getObjects());
+
         // draw Box2D debug lines
         if (debugOn)
         {
@@ -78,10 +79,10 @@ public class Level3 implements Screen
         }
 
         //create game HUD
-        //hud = new Hud(game.batch);
+        hud = new Hud(game.batch, "3");
 
         // create player knight
-        //player = new Knight(this);
+        player = new Knight(this);
 
 
 
@@ -102,23 +103,38 @@ public class Level3 implements Screen
         world.step(1 / 60f, 6, 2);
 
         // enable player to control their character
-        playerController();
-//        player.update(elapsedTime, dt);
+        playerControls();
+        player.update(elapsedTime, dt);
 
         // attach camera to player's x coordinate
-//        if (player.currentState != Knight.State.DEAD)
-//        {
-//            camera.position.x = player.b2body.getPosition().x;
-//        }
+        if (player.currentState != Knight.State.DEAD)
+        {
+            //camera.position.x = player.getX();
+        }
 
         //update camera with correct coordinates
         camera.update();
-        //hud.update(dt);
+        hud.update(dt);
 
         //tell renderer to draw only what camera can see in game world.
         renderer.setView(camera);
 
         game.batch.setProjectionMatrix(camera.combined);
+    }
+
+    @Override
+    public World getWorld() {
+        return world;
+    }
+
+    @Override
+    public Hud getHud() {
+        return hud;
+    }
+
+    @Override
+    public TiledMap getMap() {
+        return map;
     }
 
     @Override
@@ -135,7 +151,7 @@ public class Level3 implements Screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-//        player.draw(game.batch);
+        player.draw(game.batch);
         game.batch.end();
 
         // render tile map
@@ -151,15 +167,23 @@ public class Level3 implements Screen
         /// player mechanics ///
 
         // if player falls to bottom of screen, kill them
-//        if (player.getY() < 0)
-//        {
-//            player.die();
-//        }
+        if (player.getY() < 0)
+        {
+            player.die();
+        }
 
+        if(gameOver())
+        {
+            game.setScreen(new GameOverScreen(game));
+            dispose();
+        }
+
+        if (player.getLevelComplete())
+        {
+            //game.setScreen(new Win(game)); // TODO: Create Win Screen
+        }
 
         /// end player mechanics ///
-
-        // ^ must fix Knight class before we can add the player
 
         elapsedTime += delta;
     }
@@ -171,24 +195,22 @@ public class Level3 implements Screen
     }
 
     // player controls
-    public void playerController()
+    public void playerControls()
     {
-//        if (player.currentState != Knight.State.DEAD)
-//        {
-//            // walk left
-//            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2 || Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
-//                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
-//
-//            // walk right
-//            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2 || Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2)
-//                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-//
-//            // jump
-//            if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.W))
-//                player.jump();
-//        }
+        if (player.currentState != Knight.State.DEAD)
+        {
+            // walk left
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2 || Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
+                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
 
-        // ^ must fix Knight class before we can add the player
+            // walk right
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2 || Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2)
+                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+
+            // jump
+            if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.W))
+                player.jump();
+        }
     }
 
     @Override
@@ -200,6 +222,14 @@ public class Level3 implements Screen
     @Override
     public void hide() {}
 
+    public boolean gameOver()
+    {
+        if(player.currentState == Knight.State.DEAD && player.getStateTimer() > 3)
+            return true;
+
+        return false;
+    }
+
     @Override
     public void dispose()
     {
@@ -207,6 +237,6 @@ public class Level3 implements Screen
         b2dr.dispose();
         renderer.dispose();
         map.dispose();
-        //hud.dispose();
+        hud.dispose();
     }
 }
