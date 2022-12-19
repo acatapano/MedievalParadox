@@ -27,7 +27,7 @@ import com.badlogic.prototype.Sprites.Knight;
 import com.badlogic.prototype.Tools.B2WorldCreator;
 import com.badlogic.prototype.Tools.WorldContactListener;
 
-public class Level2 implements Screen
+public class Level3 implements Screen
 {
     private Prototype game;
 
@@ -53,7 +53,7 @@ public class Level2 implements Screen
     private float elapsedTime;
 
 
-    public Level2(Prototype game)
+    public Level3(Prototype game)
     {
         this.game = game;
 
@@ -68,7 +68,7 @@ public class Level2 implements Screen
         b2dr = new Box2DDebugRenderer(); // debug renderer
 
         // load tile map and renderer
-        map = new TmxMapLoader().load("Level2/Level2.tmx");
+        map = new TmxMapLoader().load("Level3/Level3.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
 
         // draw Box2D debug lines

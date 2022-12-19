@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.9" tiledversion="1.9.2" name="Decorations2" tilewidth="118" tileheight="98" tilecount="11" columns="0">
+<tileset version="1.9" tiledversion="1.9.2" name="Decorations2" tilewidth="120" tileheight="98" tilecount="12" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="73" height="19" source="decorations/fence_1.png"/>
@@ -33,5 +33,8 @@
  </tile>
  <tile id="10">
   <image width="22" height="31" source="decorations/sign.png"/>
+ </tile>
+ <tile id="13">
+  <image width="120" height="94" source="cave.png"/>
  </tile>
 </tileset>

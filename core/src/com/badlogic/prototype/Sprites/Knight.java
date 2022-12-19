@@ -52,6 +52,8 @@ public class Knight extends Sprite {
     private boolean knightIsDead;
     private Level screen;
 
+    boolean progress;
+
     public Knight(Level screen){
         //initialize default values
         this.screen = screen;
@@ -60,6 +62,7 @@ public class Knight extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
+        progress = false;
 
         textureAtlas = new TextureAtlas(Gdx.files.internal("player/blue1.atlas"));
         idleFrames = textureAtlas.findRegions("idle");
@@ -205,6 +208,7 @@ public class Knight extends Sprite {
         fdef.filter.categoryBits = Prototype.KNIGHT_BIT;
         fdef.filter.maskBits = Prototype.GROUND_BIT |
                 Prototype.SPIKE_BIT |
+                Prototype.GOAL_BIT |
                 Prototype.ENEMY_BIT;
         fdef.shape = shape;
         fdef.friction = .5f;
