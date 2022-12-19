@@ -27,24 +27,8 @@ import com.badlogic.prototype.Sprites.Knight;
 import com.badlogic.prototype.Tools.B2WorldCreator;
 import com.badlogic.prototype.Tools.WorldContactListener;
 
-public class Level2 implements Screen {
-    //Reference to Game, used to set Screens
-//    private Prototype game;
-//    private TextureAtlas atlas;
-//
-//    //basic PlayScreen variables
-//
-//    private Viewport gamePort;
-//    private Hud hud;
-//
-//    //Box2d variables
-//
-//    private B2WorldCreator creator;
-//
-//    private float elapsedTime;
-
-
-
+public class Level2 implements Screen
+{
     private Prototype game;
 
     private boolean debugOn = false;
