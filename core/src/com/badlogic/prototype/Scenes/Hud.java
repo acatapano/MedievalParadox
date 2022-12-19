@@ -24,7 +24,8 @@ public class Hud implements Disposable{
     private Integer worldTimer;
     private boolean timeUp; // true when the world timer reaches 0
     private float timeCount;
-    private static Integer score;
+    private String level;
+
 
     //Scene2D widgets
     private Label countdownLabel;
@@ -34,11 +35,11 @@ public class Hud implements Disposable{
     private Label worldLabel;
     private Label healthLabel;
 
-    public Hud(SpriteBatch sb){
+    public Hud(SpriteBatch sb, String level){
         //define tracking variables
         worldTimer = 300;
         timeCount = 0;
-        score = 0;
+        this.level = level;
 
         //setup the HUD viewport using a new camera seperate from gamecam
         //define stage using that viewport and games spritebatch
@@ -56,7 +57,7 @@ public class Hud implements Disposable{
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         barLabel =new Label("BAR", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label(level, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         worldLabel = new Label("LEVEL", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         healthLabel = new Label("HEALTH", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 

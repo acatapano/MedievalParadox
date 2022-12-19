@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.prototype.Prototype;
-import com.badlogic.prototype.Screens.Level1;
+import com.badlogic.prototype.Screens.Level;
 import com.badlogic.prototype.Sprites.Enemies.Enemy;
 import com.badlogic.prototype.Sprites.TileObjects.InteractiveTileObject;
 
@@ -50,9 +50,9 @@ public class Knight extends Sprite {
     private float stateTimer;
     private boolean runningRight;
     private boolean knightIsDead;
-    private Level1 screen;
+    private Level screen;
 
-    public Knight(Level1 screen){
+    public Knight(Level screen){
         //initialize default values
         this.screen = screen;
         this.world = screen.getWorld();
@@ -113,7 +113,7 @@ public class Knight extends Sprite {
         //depending on the state, get corresponding animation keyFrame.
         switch(currentState){
             case DEAD:
-                region = ((TextureRegion) dyingAnimation.getKeyFrame(elapsedTime, false));
+                region = ((TextureRegion) dyingAnimation.getKeyFrame(elapsedTime, true));
                 break;
             case JUMPING:
                 region = ((TextureRegion)jumpingAnimation.getKeyFrame(elapsedTime, true));
@@ -161,7 +161,7 @@ public class Knight extends Sprite {
         else if((b2body.getLinearVelocity().y > 0 && currentState == State.JUMPING) || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
             return State.JUMPING;
         //if negative in Y-Axis knight is falling
-        else if(b2body.getLinearVelocity().y < 0)
+        else if(b2body.getLinearVelocity().y < 0 && b2body.getLinearVelocity().y != 0)
             return State.FALLING;
         //if knight is positive or negative in the X axis he is running
         else if(b2body.getLinearVelocity().x != 0)
@@ -208,8 +208,6 @@ public class Knight extends Sprite {
                 Prototype.ENEMY_BIT;
         fdef.shape = shape;
         fdef.friction = .5f;
-        b2body.createFixture(fdef).setUserData(this);
-
         b2body.createFixture(fdef).setUserData(this);
     }
 

@@ -21,10 +21,10 @@ import com.badlogic.prototype.Sprites.Knight;
 import com.badlogic.prototype.Tools.B2WorldCreator;
 import com.badlogic.prototype.Tools.WorldContactListener;
 
-public class Level1 implements Screen{
+//public class Level1 implements Screen{
+public class Level1 extends com.badlogic.prototype.Screens.Level{
     //Reference to Game, used to set Screens
     private Prototype game;
-    private TextureAtlas atlas;
 
     //basic PlayScreen variables
     private OrthographicCamera gamecam;
@@ -55,7 +55,7 @@ public class Level1 implements Screen{
         gamePort = new FitViewport(Prototype.V_WIDTH / Prototype.PPM, Prototype.V_HEIGHT / Prototype.PPM, gamecam);
 
         //create game HUD
-        hud = new Hud(game.batch);
+        hud = new Hud(game.batch, "1");
 
         //Load map and setup map renderer
         maploader = new TmxMapLoader();
@@ -77,10 +77,6 @@ public class Level1 implements Screen{
 
         world.setContactListener(new WorldContactListener());
 
-    }
-
-    public TextureAtlas getAtlas(){
-        return atlas;
     }
 
     @Override
@@ -114,6 +110,7 @@ public class Level1 implements Screen{
         //attach gamecam to player's x coordinate
         if(player.currentState != Knight.State.DEAD) {
             gamecam.position.x = player.b2body.getPosition().x;
+            // gamecam.position.y = player.b2body.getPosition().y;
         }
 
         //update gamecam with correct coordinates
@@ -178,6 +175,7 @@ public class Level1 implements Screen{
     public TiledMap getMap(){
         return map;
     }
+    @Override
     public World getWorld(){
         return world;
     }
@@ -200,5 +198,6 @@ public class Level1 implements Screen{
         hud.dispose();
     }
 
+    @Override
     public Hud getHud(){ return hud; }
 }

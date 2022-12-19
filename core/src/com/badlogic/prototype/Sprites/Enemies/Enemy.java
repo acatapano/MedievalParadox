@@ -4,21 +4,21 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.prototype.Screens.Level1;
+import com.badlogic.prototype.Screens.Level;
 import com.badlogic.prototype.Sprites.Knight;
 
 public abstract class Enemy extends Sprite {
     protected World world;
-    protected Level1 screen;
+    protected Level screen;
     public Body b2body;
     public Vector2 velocity;
 
-    public Enemy(Level1 screen, float x, float y){
+    public Enemy(Level screen, float x, float y){
         this.world = screen.getWorld();
         this.screen = screen;
         setPosition(x,y);
         defineEnemy();
-        velocity = new Vector2(-1,-2);
+        velocity = new Vector2(-.7f,-2f);
         b2body.setActive(true);
     }
 

@@ -17,6 +17,7 @@ public class Prototype extends Game {
 	public static final short SPIKE_BIT = 32;
 	public static final short ENEMY_BIT = 64;
 	public static final short BARRIER_BIT = 128;
+	public static final short ATTACK_BIT = 256;
 
 	public SpriteBatch batch;
 
