@@ -2,10 +2,8 @@ package com.badlogic.prototype.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -18,11 +16,10 @@ import com.badlogic.prototype.Prototype;
 import com.badlogic.prototype.Scenes.Hud;
 import com.badlogic.prototype.Sprites.Enemies.Enemy;
 import com.badlogic.prototype.Sprites.Knight;
-import com.badlogic.prototype.Tools.B2WorldCreator;
+import com.badlogic.prototype.Tools.B2WorldCreator2;
 import com.badlogic.prototype.Tools.WorldContactListener;
 
-//public class Level1 implements Screen{
-public class Level1 extends com.badlogic.prototype.Screens.Level{
+public class Level2 extends com.badlogic.prototype.Screens.Level{
     //Reference to Game, used to set Screens
     private Prototype game;
 
@@ -39,14 +36,14 @@ public class Level1 extends com.badlogic.prototype.Screens.Level{
     //Box2d variables
     private World world;
     private Box2DDebugRenderer b2dr;
-    private B2WorldCreator creator;
+    private B2WorldCreator2 creator;
 
     //Sprites
     private Knight player;
 
     private float elapsedTime;
 
-    public Level1(Prototype game){
+    public Level2(Prototype game){
         this.game = game;
         //create cam to follow knight through level
         gamecam = new OrthographicCamera();
@@ -55,11 +52,11 @@ public class Level1 extends com.badlogic.prototype.Screens.Level{
         gamePort = new FitViewport(Prototype.V_WIDTH / Prototype.PPM, Prototype.V_HEIGHT / Prototype.PPM, gamecam);
 
         //create game HUD
-        hud = new Hud(game.batch, "1");
+        hud = new Hud(game.batch, "2");
 
         //Load map and setup map renderer
         maploader = new TmxMapLoader();
-        map = maploader.load("Level1/level1.tmx");
+        map = maploader.load("Level2/level2.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1  / Prototype.PPM);
 
         //initially set gamcam to be centered correctly at the start of of map
@@ -70,11 +67,10 @@ public class Level1 extends com.badlogic.prototype.Screens.Level{
         //allows for debug lines of box2d world.
         b2dr = new Box2DDebugRenderer();
 
-        creator = new B2WorldCreator(this);
+        creator = new B2WorldCreator2(this);
 
         //create knight
         player = new Knight(this);
-
         world.setContactListener(new WorldContactListener());
 
     }
@@ -156,11 +152,11 @@ public class Level1 extends com.badlogic.prototype.Screens.Level{
             dispose();
         }
 
-        if (player.getLevelComplete()) {
-            game.setScreen(new Level3(game));
-        }
-
         elapsedTime += delta;
+
+        /*if (player.getLevel1Complete()) {
+            game.setScreen(new Level2(game));
+        }*/
 
     }
 
@@ -176,7 +172,6 @@ public class Level1 extends com.badlogic.prototype.Screens.Level{
         gamePort.update(width,height);
     }
 
-    @Override
     public TiledMap getMap(){
         return map;
     }

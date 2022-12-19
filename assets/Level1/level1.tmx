@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="90" height="13" tilewidth="24" tileheight="24" infinite="0" nextlayerid="24" nextobjectid="42">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="90" height="13" tilewidth="24" tileheight="24" infinite="0" nextlayerid="24" nextobjectid="43">
  <tileset firstgid="1" source="Backgrounds2.tsx"/>
  <tileset firstgid="4" source="Ground2.tsx"/>
  <tileset firstgid="319" source="Spikes.tsx"/>
@@ -85,6 +85,6 @@
   <object id="39" x="1488" y="120" width="24" height="24"/>
  </objectgroup>
  <objectgroup id="23" name="Goal" locked="1">
-  <object id="40" x="1848" y="168" width="72" height="48"/>
+  <object id="42" x="1872" y="168" width="24" height="48"/>
  </objectgroup>
 </map>

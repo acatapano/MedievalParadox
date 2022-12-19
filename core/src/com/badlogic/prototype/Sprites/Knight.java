@@ -52,7 +52,7 @@ public class Knight extends Sprite {
     private boolean knightIsDead;
     private Level screen;
 
-    boolean progress;
+    boolean levelComplete;
 
     public Knight(Level screen){
         //initialize default values
@@ -62,7 +62,7 @@ public class Knight extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
-        progress = false;
+        levelComplete = false;
 
         textureAtlas = new TextureAtlas(Gdx.files.internal("player/blue1.atlas"));
         idleFrames = textureAtlas.findRegions("idle");
@@ -224,4 +224,8 @@ public class Knight extends Sprite {
     }
 
     public void hitEnemy(Enemy enemy) { die(); }
+
+    public void completeLevel() { levelComplete = true; }
+
+    public boolean getLevelComplete() { return levelComplete; }
 }
