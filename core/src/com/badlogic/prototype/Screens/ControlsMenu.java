@@ -3,6 +3,7 @@ package com.badlogic.prototype.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,9 +18,13 @@ public class ControlsMenu implements Screen
     Texture backgroundTex;
     Sprite backgroundSprite;
 
-    public ControlsMenu(Prototype game)
+    Music music;
+
+    public ControlsMenu(Prototype game, Music music)
     {
         this.game = game;
+
+        this.music = music;
 
         backgroundTex = new Texture(Gdx.files.internal("story_controls.png"));
         backgroundSprite = new Sprite(backgroundTex);
@@ -68,13 +73,17 @@ public class ControlsMenu implements Screen
         game.batch.end();
         // end batch
 
-        if (Gdx.input.justTouched()) {
+        if (Gdx.input.justTouched())
+        {
+            music.stop();
+            music.dispose();
             game.setScreen(new Level1(game)); // change this line to skip levels
             dispose();
         }
         // press Esc to go back to story screen
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            game.setScreen(new StoryMenu(game));
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+        {
+            game.setScreen(new StoryMenu(game, music));
             dispose();
         }
 

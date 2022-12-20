@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.prototype.Prototype;
 
 public class Hud implements Disposable{
 
@@ -33,8 +34,8 @@ public class Hud implements Disposable{
     private Label worldLabel;
     private Label healthLabel;
 
-    private OrthographicCamera camera; ////////////////////////////////////
-    private final float SCALE = 2.0f; /////////////////////////////////////
+    private OrthographicCamera camera;
+    private final float SCALE = 2.0f;
 
     public Hud(SpriteBatch sb, String level){
         //define tracking variables
@@ -44,16 +45,16 @@ public class Hud implements Disposable{
 
         //setup the HUD viewport using a new camera seperate from gamecam
         //define stage using that viewport and games spritebatch
-//        viewport = new FitViewport(Prototype.V_WIDTH, Prototype.V_HEIGHT, new OrthographicCamera());
-//        stage = new Stage(viewport, sb);
-
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
-        camera = new OrthographicCamera(); /////////////////////////////////////
-        camera.setToOrtho(false, width/SCALE, height/SCALE); ///////////////////
-
-        viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        viewport = new FitViewport(Prototype.V_WIDTH, Prototype.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
+
+//        float width = Gdx.graphics.getWidth();
+//        float height = Gdx.graphics.getHeight();
+//        camera = new OrthographicCamera();
+//        camera.setToOrtho(false, width/SCALE, height/SCALE);
+//
+//        viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+//        stage = new Stage(viewport, sb);
 
         //define a table used to organize hud's labels
         Table table = new Table();
@@ -84,7 +85,8 @@ public class Hud implements Disposable{
         stage.addActor(table);
     }
 
-    public void update(float dt){
+    public void update(float dt)
+    {
         timeCount += dt;
         if(timeCount >= 1){
             if (worldTimer > 0) {

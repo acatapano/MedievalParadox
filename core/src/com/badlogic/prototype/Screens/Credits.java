@@ -3,6 +3,7 @@ package com.badlogic.prototype.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,9 +17,17 @@ public class Credits implements Screen {
     Texture backgroundTex;
     Sprite backgroundSprite;
 
+    private Music music;
+
     public Credits(Prototype game)
     {
         this.game = game;
+
+        // start music
+        music = Gdx.audio.newMusic(Gdx.files.internal("2020-02-22_-_Relaxing_Green_Nature_-_David_Fesliyan.mp3"));
+        music.setVolume(0.3f);
+        music.setLooping(true);
+        music.play();
 
         backgroundTex = new Texture(Gdx.files.internal("story_controls.png"));
         backgroundSprite = new Sprite(backgroundTex);
@@ -57,6 +66,7 @@ public class Credits implements Screen {
         game.font.draw(game.batch, "Level 2: Pixel Fantasy \"Caves\" - Szadi art", 55, 300);
         game.font.draw(game.batch, "Level 3: 16x16 Dungeon Tileset - Genewheel", 55, 275);
         game.font.draw(game.batch, "King: Pixel King - BalduranCZ", 55, 250);
+        game.font.draw(game.batch, "Music: Various tracks by David Fesliyan", 55, 225);
         game.font.draw(game.batch, "PARADOXICAL PRODUCTIONS:", 55, 200);
         game.font.draw(game.batch, "Andrew Catapano", 55, 175);
         game.font.draw(game.batch, "Anthony Cross", 55, 150);
@@ -70,7 +80,8 @@ public class Credits implements Screen {
         // end batch
 
         if (Gdx.input.justTouched()) {
-            game.setScreen(new MainMenu(game)); // change this line to skip levels
+            music.stop();
+            game.setScreen(new MainMenu(game));
             dispose();
         }
 
@@ -95,5 +106,6 @@ public class Credits implements Screen {
     @Override
     public void dispose() {
         backgroundTex.dispose();
+        music.dispose();
     }
 }

@@ -2,6 +2,7 @@ package com.badlogic.prototype.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -10,7 +11,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.prototype.Prototype;
 import com.badlogic.prototype.Scenes.Hud;
@@ -44,6 +49,8 @@ public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1
 
     private float elapsedTime;
 
+    Music music;
+
     public Level1(Prototype game)
     {
         this.game = game;
@@ -52,6 +59,12 @@ public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1
 
         //create a FitViewport to maintain virtual aspect ratio despite screen size
         gamePort = new FitViewport(Prototype.V_WIDTH / Prototype.PPM, Prototype.V_HEIGHT / Prototype.PPM, gamecam);
+
+        // start music
+        music = Gdx.audio.newMusic(Gdx.files.internal("2021-02-23_-_Fantasy_Ambience_-_David_Fesliyan.mp3"));
+        music.setVolume(0.3f);
+        music.setLooping(true);
+        music.play();
 
         //create game HUD
         hud = new Hud(game.batch, "1");
@@ -200,6 +213,7 @@ public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+        music.dispose();
     }
 
     @Override

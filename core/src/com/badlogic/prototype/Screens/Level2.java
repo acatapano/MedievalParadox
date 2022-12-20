@@ -2,6 +2,7 @@ package com.badlogic.prototype.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -41,6 +42,8 @@ public class Level2 extends com.badlogic.prototype.Screens.Level{
     //Sprites
     private Knight player;
 
+    private Music music;
+
     private float elapsedTime;
 
     public Level2(Prototype game){
@@ -50,6 +53,12 @@ public class Level2 extends com.badlogic.prototype.Screens.Level{
 
         //create a FitViewport to maintain virtual aspect ratio despite screen size
         gamePort = new FitViewport(Prototype.V_WIDTH / Prototype.PPM, Prototype.V_HEIGHT / Prototype.PPM, gamecam);
+
+        // start music
+        music = Gdx.audio.newMusic(Gdx.files.internal("2021-05-28_-_Viking_Feast_-_David_Fesliyan.mp3"));
+        music.setVolume(0.3f);
+        music.setLooping(true);
+        music.play();
 
         //create game HUD
         hud = new Hud(game.batch, "2");
@@ -147,14 +156,18 @@ public class Level2 extends com.badlogic.prototype.Screens.Level{
             player.die();
         }
 
-        if(gameOver()){
+        if(gameOver())
+        {
+            music.stop();
             game.setScreen(new GameOverScreen(game));
             dispose();
         }
 
         elapsedTime += delta;
 
-        if (player.getLevelComplete()) {
+        if (player.getLevelComplete())
+        {
+            music.stop();
             game.setScreen(new Level3(game));
         }
 
@@ -196,6 +209,7 @@ public class Level2 extends com.badlogic.prototype.Screens.Level{
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+        music.dispose();
     }
 
     @Override

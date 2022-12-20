@@ -6,6 +6,7 @@ import static com.badlogic.prototype.Prototype.PPM;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -53,15 +54,24 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
     //Sprites
     private Knight player;
 
+    private Music music;
+
     private float elapsedTime;
 
-    public Level3(Prototype game){
+    public Level3(Prototype game)
+    {
         this.game = game;
         //create cam to follow knight through level
         gamecam = new OrthographicCamera();
 
         //create a FitViewport to maintain virtual aspect ratio despite screen size
         gamePort = new FitViewport(Prototype.V_WIDTH / Prototype.PPM, Prototype.V_HEIGHT / Prototype.PPM, gamecam);
+
+        // start music
+        music = Gdx.audio.newMusic(Gdx.files.internal("2017-06-16_-_The_Dark_Castle_-_David_Fesliyan.mp3"));
+        music.setVolume(0.3f);
+        music.setLooping(true);
+        music.play();
 
         //create game HUD
         hud = new Hud(game.batch, "3");
@@ -84,7 +94,6 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
         //create knight
         player = new Knight(this, 50, 100);
         world.setContactListener(new WorldContactListener());
-
     }
 
     @Override
@@ -125,7 +134,6 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
         gamecam.update();
         //tell renderer to draw only what camera can see in game world.
         renderer.setView(gamecam);
-
     }
 
     @Override
@@ -155,27 +163,34 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
 
-        if(player.getY() < 0){
+        if(player.getY() < 0)
+        {
             player.die();
         }
 
-        if(gameOver()){
+        if(gameOver())
+        {
+            music.stop();
             game.setScreen(new GameOverScreen(game));
             dispose();
         }
 
         elapsedTime += delta;
 
-        if (player.getLevelComplete()) {
+        if (player.getLevelComplete())
+        {
+            music.stop();
             game.setScreen(new Credits(game));
+            dispose();
         }
 
     }
 
-    public boolean gameOver(){
-        if(player.currentState == Knight.State.DEAD && player.getStateTimer() > 3){
+    public boolean gameOver()
+    {
+        if(player.currentState == Knight.State.DEAD && player.getStateTimer() > 3)
             return true;
-        }
+
         return false;
     }
 
@@ -208,6 +223,7 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+        //music.dispose();
     }
 
     @Override
