@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.prototype.Prototype;
-import com.badlogic.prototype.Screens.Level1;
+import com.badlogic.prototype.Screens.Level3;
 import com.badlogic.prototype.Sprites.Enemies.Enemy;
 import com.badlogic.prototype.Sprites.Enemies.Tank;
 import com.badlogic.prototype.Sprites.TileObjects.Spike;
@@ -19,7 +19,7 @@ import com.badlogic.prototype.Sprites.TileObjects.Spike;
 public class B2WorldCreator3 {
     public Array<Tank> tanks;
 
-    /*public B2WorldCreator3(Level3 screen){
+    public B2WorldCreator3(Level3 screen){
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
         //create body and fixture variables
@@ -29,7 +29,7 @@ public class B2WorldCreator3 {
         Body body;
 
         //create ground bodies/fixtures
-        for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / Prototype.PPM, (rect.getY() + rect.getHeight() / 2) / Prototype.PPM);
@@ -43,17 +43,17 @@ public class B2WorldCreator3 {
             body.createFixture(fdef);
         }
 
-        for(MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             new Spike(screen, object);
         }
 
         tanks = new Array<Tank>();
-        for(MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            tanks.add(new Tank(screen,rect.getX() / Prototype.PPM, rect.getY() / Prototype.PPM));
+            tanks.add(new Tank(screen, rect.getX() / Prototype.PPM, rect.getY() / Prototype.PPM, 0.3f, -0.1f));
         }
 
-        for(MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / Prototype.PPM, (rect.getY() + rect.getHeight() / 2) / Prototype.PPM);
@@ -66,7 +66,7 @@ public class B2WorldCreator3 {
             // body.createFixture(fdef);
         }
 
-        for(MapObject object : map.getLayers().get(11).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / Prototype.PPM, (rect.getY() + rect.getHeight() / 2) / Prototype.PPM);
@@ -89,5 +89,5 @@ public class B2WorldCreator3 {
         Array<Enemy> enemies = new Array<Enemy>();
         enemies.addAll(tanks);
         return enemies;
-    }*/
+    }
 }

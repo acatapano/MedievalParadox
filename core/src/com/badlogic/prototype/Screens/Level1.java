@@ -112,7 +112,7 @@ public class Level1 extends com.badlogic.prototype.Screens.Level
         //attach gamecam to player's x coordinate
         if(player.currentState != Knight.State.DEAD) {
             gamecam.position.x = player.b2body.getPosition().x;
-            // gamecam.position.y = player.b2body.getPosition().y;
+            gamecam.position.y = player.b2body.getPosition().y;
         }
 
         //update gamecam with correct coordinates
@@ -159,7 +159,7 @@ public class Level1 extends com.badlogic.prototype.Screens.Level
         }
 
         if (player.getLevelComplete()) {
-            game.setScreen(new Level3(game));
+            game.setScreen(new Level2(game));
         }
 
         elapsedTime += delta;
