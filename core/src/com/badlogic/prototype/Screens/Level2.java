@@ -160,7 +160,7 @@ public class Level2 extends com.badlogic.prototype.Screens.Level{
         if(gameOver())
         {
             music.stop();
-            game.setScreen(new GameOverScreen(game));
+            game.setScreen(new GameOverScreen2(game));
             dispose();
         }
 

@@ -163,7 +163,7 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
         if(gameOver())
         {
             music.stop();
-            game.setScreen(new GameOverScreen(game));
+            game.setScreen(new GameOverScreen3(game));
             dispose();
         }
 
