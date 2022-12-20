@@ -49,6 +49,7 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
     private Music music;
 
     private float elapsedTime;
+    private float violenceTime=11;
 
     public Level3(Prototype game)
     {
@@ -100,6 +101,10 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
                 player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2 || Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
                 player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+            if(Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
+                player.beginAttack();
+                violenceTime = 0;
+            }
         }
     }
 
@@ -111,6 +116,14 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
         world.step(1 / 60f, 6, 2);
 
         player.update(elapsedTime, dt);
+        if(player.isViolent() && violenceTime<=10)
+        {
+            violenceTime+=1;
+        }
+        else if(player.isViolent() && violenceTime>10)
+        {
+            player.endAttack();
+        }
         for(Enemy enemy : creator.getEnemies()){
             enemy.update(elapsedTime, dt);
         }
