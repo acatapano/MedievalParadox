@@ -15,13 +15,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.prototype.Prototype;
 
 // Refer to MainMenu comments. No significant changes in code.
-public class GameOverScreen implements Screen {
+public class GameOverScreen2 implements Screen {
     private Viewport viewport;
     private Stage stage;
 
     private Game game;
 
-    public GameOverScreen(Game game){
+    public GameOverScreen2(Game game){
         this.game = game;
         viewport = new FitViewport(Prototype.V_WIDTH, Prototype.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((Prototype) game).batch);
@@ -50,7 +50,7 @@ public class GameOverScreen implements Screen {
     @Override
     public void render(float delta) {
         if(Gdx.input.justTouched()) {
-            game.setScreen(new Level1((Prototype) game));
+            game.setScreen(new Level2((Prototype) game));
             dispose();
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);

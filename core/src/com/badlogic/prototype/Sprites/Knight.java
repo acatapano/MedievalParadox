@@ -106,7 +106,6 @@ public class Knight extends Sprite {
         setRegion(getFrame(elapsedTime, dt));
     }
 
-    // TODO: FIX DEATH ANIMATION
     public TextureRegion getFrame(float elapsedTime, float dt){
         //get knight's current state. ie. jumping, running, standing...
         currentState = getState();
@@ -116,7 +115,7 @@ public class Knight extends Sprite {
         //depending on the state, get corresponding animation keyFrame.
         switch(currentState){
             case DEAD:
-                region = ((TextureRegion) dyingAnimation.getKeyFrame(elapsedTime, true));
+                region = ((TextureRegion) dyingAnimation.getKeyFrame(elapsedTime, false));
                 break;
             case JUMPING:
                 region = ((TextureRegion)jumpingAnimation.getKeyFrame(elapsedTime, true));
