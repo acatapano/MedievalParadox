@@ -29,8 +29,8 @@ public class Tank extends com.badlogic.prototype.Sprites.Enemies.Enemy{
     public State currentState;
     public State previousState;
 
-    public Tank(Level screen, float x, float y){
-        super(screen,x,y);
+    public Tank(Level screen, float x, float y, float xAdjust, float yAdjust){
+        super(screen,x,y, xAdjust, yAdjust);
         currentState = State.ALIVE;
         previousState = State.ALIVE;
 
@@ -99,9 +99,9 @@ public class Tank extends com.badlogic.prototype.Sprites.Enemies.Enemy{
     }
 
     @Override
-    protected void defineEnemy(){
+    protected void defineEnemy(float xAdjust, float yAdjust){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(getX() - 2,getY() - 0.55f);
+        bdef.position.set(getX() - xAdjust,getY() - yAdjust);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 

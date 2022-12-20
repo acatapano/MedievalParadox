@@ -13,16 +13,16 @@ public abstract class Enemy extends Sprite {
     public Body b2body;
     public Vector2 velocity;
 
-    public Enemy(Level screen, float x, float y){
+    public Enemy(Level screen, float x, float y, float xAdjust, float yAdjust){
         this.world = screen.getWorld();
         this.screen = screen;
         setPosition(x,y);
-        defineEnemy();
+        defineEnemy(xAdjust, yAdjust);
         velocity = new Vector2(-.7f,-2f);
         b2body.setActive(true);
     }
 
-    protected abstract void defineEnemy();
+    protected abstract void defineEnemy(float xAdjust, float yAdjust);
     public abstract void update(float elapsedTime, float dt);
     public abstract void hit(Knight knight);
     public abstract void hitByEnemy(Enemy enemy);

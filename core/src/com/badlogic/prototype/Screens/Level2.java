@@ -70,7 +70,7 @@ public class Level2 extends com.badlogic.prototype.Screens.Level{
         creator = new B2WorldCreator2(this);
 
         //create knight
-        player = new Knight(this);
+        player = new Knight(this, 50, 100);
         world.setContactListener(new WorldContactListener());
 
     }
@@ -106,7 +106,7 @@ public class Level2 extends com.badlogic.prototype.Screens.Level{
         //attach gamecam to player's x coordinate
         if(player.currentState != Knight.State.DEAD) {
             gamecam.position.x = player.b2body.getPosition().x;
-            // gamecam.position.y = player.b2body.getPosition().y;
+            gamecam.position.y = player.b2body.getPosition().y;
         }
 
         //update gamecam with correct coordinates
@@ -155,7 +155,7 @@ public class Level2 extends com.badlogic.prototype.Screens.Level{
         elapsedTime += delta;
 
         /*if (player.getLevel1Complete()) {
-            game.setScreen(new Level2(game));
+            game.setScreen(new Level3(game));
         }*/
 
     }

@@ -29,7 +29,7 @@ public class B2WorldCreator2 {
         Body body;
 
         //create ground bodies/fixtures
-        for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / Prototype.PPM, (rect.getY() + rect.getHeight() / 2) / Prototype.PPM);
@@ -48,12 +48,12 @@ public class B2WorldCreator2 {
         }
 
         tanks = new Array<Tank>();
-        for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get(11).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            tanks.add(new Tank(screen, rect.getX() / Prototype.PPM, rect.getY() / Prototype.PPM));
+            tanks.add(new Tank(screen, rect.getX() / Prototype.PPM, rect.getY() / Prototype.PPM, 0.3f, -0.1f));
         }
 
-        for (MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get(12).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / Prototype.PPM, (rect.getY() + rect.getHeight() / 2) / Prototype.PPM);
@@ -66,7 +66,7 @@ public class B2WorldCreator2 {
             // body.createFixture(fdef);
         }
 
-        for (MapObject object : map.getLayers().get(11).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / Prototype.PPM, (rect.getY() + rect.getHeight() / 2) / Prototype.PPM);

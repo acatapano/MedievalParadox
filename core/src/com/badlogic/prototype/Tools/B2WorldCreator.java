@@ -50,7 +50,7 @@ public class B2WorldCreator {
         tanks = new Array<Tank>();
         for(MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            tanks.add(new Tank(screen,rect.getX() / Prototype.PPM, rect.getY() / Prototype.PPM));
+            tanks.add(new Tank(screen,rect.getX() / Prototype.PPM, rect.getY() / Prototype.PPM, 2, 0.55f));
         }
 
         for(MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)){

@@ -75,7 +75,7 @@ public class Level1 extends com.badlogic.prototype.Screens.Level
         creator = new B2WorldCreator(this);
 
         //create knight
-        player = new Knight(this);
+        player = new Knight(this, 50, 100);
 
         world.setContactListener(new WorldContactListener());
 
