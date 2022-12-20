@@ -17,7 +17,7 @@ public class Credits implements Screen {
     Texture backgroundTex;
     Sprite backgroundSprite;
 
-    private Music music;
+    Music music;
 
     public Credits(Prototype game)
     {
@@ -81,7 +81,7 @@ public class Credits implements Screen {
 
         if (Gdx.input.justTouched()) {
             music.stop();
-            game.setScreen(new MainMenu(game, music));
+            game.setScreen(new MainMenu(game));
             dispose();
         }
 

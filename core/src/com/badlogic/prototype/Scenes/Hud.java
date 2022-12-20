@@ -43,8 +43,8 @@ public class Hud implements Disposable{
 
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
-        camera = new OrthographicCamera(); /////////////////////////////////////
-        camera.setToOrtho(false, width/SCALE, height/SCALE); ///////////////////
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, width/SCALE, height/SCALE);
 
         viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
         stage = new Stage(viewport, sb);

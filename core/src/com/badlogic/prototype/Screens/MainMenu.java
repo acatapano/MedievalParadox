@@ -14,7 +14,7 @@ import com.badlogic.prototype.Prototype;
 public class MainMenu implements Screen
 {
     // Sets up game and camera.
-    final Prototype game;
+    Prototype game;
     OrthographicCamera camera;
 
     Texture backgroundTex;
@@ -23,7 +23,7 @@ public class MainMenu implements Screen
     // Creates music.
     Music music;
 
-    public MainMenu(Prototype game, Music music)
+    public MainMenu(Prototype game)
     {
         this.game = game;
 
@@ -33,6 +33,18 @@ public class MainMenu implements Screen
         this.music.setLooping(true);
         this.music.play();
 
+        init();
+    }
+
+    public MainMenu(Prototype game, Music music)
+    {
+        this.game = game;
+        this.music = music;
+        init();
+    }
+
+    private void init()
+    {
         // Sets up background image.
         backgroundTex = new Texture(Gdx.files.internal("mainmenu_bg.png"));
         backgroundSprite = new Sprite(backgroundTex);
@@ -67,7 +79,7 @@ public class MainMenu implements Screen
         // end batch
 
         // If the player clicks, the screen is set to the StoryMenu
-        if (Gdx.input.isTouched())
+        if (Gdx.input.justTouched())
         {
             game.setScreen(new StoryMenu(game, music));
             dispose();
@@ -97,6 +109,6 @@ public class MainMenu implements Screen
     @Override
     public void dispose() {
         backgroundTex.dispose();
-        music.dispose();
+        //music.dispose();
     }
 }
