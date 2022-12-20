@@ -16,6 +16,7 @@ import com.badlogic.prototype.Sprites.Enemies.Enemy;
 import com.badlogic.prototype.Sprites.Enemies.Tank;
 import com.badlogic.prototype.Sprites.TileObjects.Spike;
 
+// Generates box2d bodies for level2 tile map. Refer to B2WorldCreator comments. No significant changes in code.
 public class B2WorldCreator2 {
     public Array<Tank> tanks;
 
@@ -63,7 +64,6 @@ public class B2WorldCreator2 {
             fdef.filter.categoryBits = Prototype.BARRIER_BIT;
             fdef.filter.maskBits = Prototype.ENEMY_BIT;
             body.createFixture(fdef).setUserData(this);
-            // body.createFixture(fdef);
         }
 
         for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)) {
@@ -76,13 +76,8 @@ public class B2WorldCreator2 {
             fdef.filter.categoryBits = Prototype.GOAL_BIT;
             fdef.filter.maskBits = Prototype.KNIGHT_BIT;
             body.createFixture(fdef).setUserData(this);
-            // body.createFixture(fdef);
         }
 
-    }
-
-    public Array<Tank> getTanks(){
-        return tanks;
     }
 
     public Array<Enemy> getEnemies(){

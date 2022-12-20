@@ -1,7 +1,6 @@
 package com.badlogic.prototype.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.prototype.Prototype;
 
+// Refer to MainMenu comments. No significant changes in code.
 public class Credits implements Screen {
     final Prototype game;
     OrthographicCamera camera;

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.prototype.Prototype;
 
+// Refer to MainMenu comments. No significant changes in code.
 public class StoryMenu implements Screen
 {
     final Prototype game;
@@ -78,7 +79,7 @@ public class StoryMenu implements Screen
             game.setScreen(new ControlsMenu(game, music));
             dispose();
         }
-        // press Esc to go back to story screen
+        // Press Esc to go back to story screen
         else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
             game.setScreen(new MainMenu(game, music));

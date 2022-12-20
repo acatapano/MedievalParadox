@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.prototype.Prototype;
 
+// Refer to MainMenu comments. No significant changes in code.
 public class ControlsMenu implements Screen
 {
     final Prototype game;
@@ -55,16 +56,14 @@ public class ControlsMenu implements Screen
 
         // Story info
         game.font.getData().setScale(1.5f);
-        game.font.draw(game.batch, "WALK........Left and Right Arrow Keys, or A and D", 55, 380);
-        game.font.draw(game.batch, "RUN...........Hold Shift while Walking", 55, 350);
-        game.font.draw(game.batch, "JUMP.........Spacebar or W", 55, 320);
-        game.font.draw(game.batch, "ATTACK.....Enter or Left-Ctrl", 55, 290);
-        game.font.draw(game.batch, "TIPS:", 55, 260);
-        game.font.draw(game.batch, "  -  Avoid being struck by enemies to stay alive", 55, 230);
-        game.font.draw(game.batch, "  -  Recover health by finding Hearts", 55, 200);
-        game.font.draw(game.batch, "  -  Jump over spikes and dangerous gaps", 55, 170);
-        game.font.draw(game.batch, "  -  Attack robots to destroy them", 55, 140);
-        game.font.draw(game.batch, "  -  Reach the end of the level to progress", 55, 110);
+        game.font.draw(game.batch, "RUN...........Left and Right Arrow Keys or A and D", 55, 380);
+        game.font.draw(game.batch, "JUMP.........Spacebar, W, or Up Arrow Key", 55, 350);
+        game.font.draw(game.batch, "ATTACK.....Enter or Left-Ctrl", 55, 320);
+        game.font.draw(game.batch, "TIPS:", 55, 290);
+        game.font.draw(game.batch, "  -  Avoid being struck by enemies to stay alive", 55, 260);
+        game.font.draw(game.batch, "  -  Jump over spikes and dangerous gaps", 55, 230);
+        game.font.draw(game.batch, "  -  Attack robots to destroy them", 55, 200);
+        game.font.draw(game.batch, "  -  Reach the end of the level to progress", 55, 170);
 
         game.font.getData().setScale(1.2f);
         game.font.draw(game.batch, "Click or tap anywhere to start the game", 55, 70);
