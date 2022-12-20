@@ -14,11 +14,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class Hud implements Disposable{
 
-    //Scene2D.ui Stage and its own Viewport for HUD
+    // Stage and its own Viewport for HUD
     public Stage stage;
     private Viewport viewport;
 
-    //Mario score/time Tracking Variables
+    // Knight time/level Tracking Variables
     private Integer worldTimer;
     private boolean timeUp; // true when the world timer reaches 0
     private float timeCount;
@@ -27,25 +27,19 @@ public class Hud implements Disposable{
 
     //Scene2D widgets
     private Label countdownLabel;
-    private static Label barLabel;
     private Label timeLabel;
     private Label levelLabel;
     private Label worldLabel;
-    private Label healthLabel;
 
-    private OrthographicCamera camera; ////////////////////////////////////
-    private final float SCALE = 2.0f; /////////////////////////////////////
+    // Sets up camera and camera scale
+    private OrthographicCamera camera;
+    private final float SCALE = 2.0f;
 
     public Hud(SpriteBatch sb, String level){
         //define tracking variables
         worldTimer = 300;
         timeCount = 0;
         this.level = level;
-
-        //setup the HUD viewport using a new camera seperate from gamecam
-        //define stage using that viewport and games spritebatch
-//        viewport = new FitViewport(Prototype.V_WIDTH, Prototype.V_HEIGHT, new OrthographicCamera());
-//        stage = new Stage(viewport, sb);
 
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
@@ -64,19 +58,15 @@ public class Hud implements Disposable{
 
         //define labels using the String, and a Label style consisting of a font and color
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        barLabel =new Label("BAR", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label(level, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         worldLabel = new Label("LEVEL", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        healthLabel = new Label("HEALTH", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         //add labels to table, padding the top, and giving them all equal width with expandX
-        table.add(healthLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
         table.add(timeLabel).expandX().padTop(10);
         //add a second row to table
         table.row();
-        table.add(barLabel).expandX();
         table.add(levelLabel).expandX();
         table.add(countdownLabel).expandX();
 
