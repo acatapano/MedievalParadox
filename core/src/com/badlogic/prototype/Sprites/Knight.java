@@ -54,7 +54,7 @@ public class Knight extends Sprite {
 
     boolean levelComplete;
 
-    public Knight(Level screen){
+    public Knight(Level screen, float startingX, float startingY){
         //initialize default values
         this.screen = screen;
         this.world = screen.getWorld();
@@ -83,7 +83,7 @@ public class Knight extends Sprite {
         setScale(3f);
 
         //define Knight in Box2d
-        defineKnight();
+        defineKnight(startingX, startingY);
 
         //set initial values for knight's location, width, and height. And initial frame as the first idle frame.
         setBounds(0, 0, 16 / Prototype.PPM, 16 / Prototype.PPM);
@@ -195,9 +195,9 @@ public class Knight extends Sprite {
         }
     }
 
-    public void defineKnight(){
+    public void defineKnight(float startingX, float startingY){
         BodyDef bdef = new BodyDef();
-        setPosition(50/ Prototype.PPM,100/ Prototype.PPM);
+        setPosition(startingX/ Prototype.PPM,startingY/ Prototype.PPM);
         bdef.position.set(getX() + getWidth() / 2, getY() + getHeight() / 2);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);

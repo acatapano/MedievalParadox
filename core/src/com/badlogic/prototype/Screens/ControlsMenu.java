@@ -69,7 +69,7 @@ public class ControlsMenu implements Screen
         // end batch
 
         if (Gdx.input.justTouched()) {
-            game.setScreen(new Level3(game)); // change this line to skip levels
+            game.setScreen(new Level2(game)); // change this line to skip levels
             dispose();
         }
         // press Esc to go back to story screen

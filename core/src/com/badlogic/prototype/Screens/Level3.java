@@ -82,7 +82,7 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
         hud = new Hud(game.batch, "3");
 
         // create player knight
-        player = new Knight(this);
+        player = new Knight(this, 50, 200);
 
 
 
@@ -109,7 +109,7 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
         // attach camera to player's x coordinate
         if (player.currentState != Knight.State.DEAD)
         {
-            //camera.position.x = player.getX();
+            camera.position.x = player.getX();
         }
 
         //update camera with correct coordinates
@@ -120,6 +120,10 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
         renderer.setView(camera);
 
         game.batch.setProjectionMatrix(camera.combined);
+
+        game.batch.begin();
+        player.draw(game.batch);
+        game.batch.end();
     }
 
     @Override
