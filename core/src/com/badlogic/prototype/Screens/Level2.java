@@ -154,9 +154,9 @@ public class Level2 extends com.badlogic.prototype.Screens.Level{
 
         elapsedTime += delta;
 
-        /*if (player.getLevel1Complete()) {
+        if (player.getLevelComplete()) {
             game.setScreen(new Level3(game));
-        }*/
+        }
 
     }
 

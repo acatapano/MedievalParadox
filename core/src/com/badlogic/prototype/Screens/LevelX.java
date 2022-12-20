@@ -82,7 +82,7 @@ public class LevelX extends com.badlogic.prototype.Screens.Level implements Scre
         hud = new Hud(game.batch, "3");
 
         // create player knight
-        player = new Knight(this);
+        player = new Knight(this, 50, 100);
 
 
 

@@ -25,222 +25,191 @@ import com.badlogic.prototype.Scenes.Hud;
 import com.badlogic.prototype.Sprites.Enemies.Enemy;
 import com.badlogic.prototype.Sprites.Knight;
 import com.badlogic.prototype.Tools.B2WorldCreator;
+import com.badlogic.prototype.Tools.B2WorldCreator2;
+import com.badlogic.prototype.Tools.B2WorldCreator3;
 import com.badlogic.prototype.Tools.TileObjectParseUtil;
 import com.badlogic.prototype.Tools.WorldContactListener;
 
 public class Level3 extends com.badlogic.prototype.Screens.Level implements Screen
 {
+    //Reference to Game, used to set Screens
     private Prototype game;
 
-    private boolean debugOn = true;
-
-    private OrthographicCamera camera;
-    private final float SCALE = 2.0f;
-
+    //basic PlayScreen variables
+    private OrthographicCamera gamecam;
+    private Viewport gamePort;
     private Hud hud;
 
-    // tile map stuff
+    //Tiled map variables
+    private TmxMapLoader maploader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
+    //Box2d variables
     private World world;
     private Box2DDebugRenderer b2dr;
+    private B2WorldCreator3 creator;
 
-    // sprites
+    //Sprites
     private Knight player;
 
     private float elapsedTime;
 
-    public Level3(Prototype game)
-    {
+    public Level3(Prototype game){
         this.game = game;
+        //create cam to follow knight through level
+        gamecam = new OrthographicCamera();
 
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
-
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, width/SCALE, height/SCALE);
-
-        //create Box2D world with no gravity in X, -10 gravity in Y
-        world = new World(new Vector2(0f, -9.8f), false);
-        b2dr = new Box2DDebugRenderer(); // debug renderer
-
-        // load tile map and renderer
-        map = new TmxMapLoader().load("Level3/Level3.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
-
-        // load the tile map collision layer
-        TileObjectParseUtil.parseTiledObjLayer(world, map.getLayers().get("Collision Layer").getObjects());
-
-        // draw Box2D debug lines
-        if (debugOn)
-        {
-            b2dr.render(world, camera.combined);
-        }
+        //create a FitViewport to maintain virtual aspect ratio despite screen size
+        gamePort = new FitViewport(Prototype.V_WIDTH / Prototype.PPM, Prototype.V_HEIGHT / Prototype.PPM, gamecam);
 
         //create game HUD
-        hud = new Hud(game.batch, "3");
+        hud = new Hud(game.batch, "2");
 
-        // create player knight
-        player = new Knight(this, 50, 200);
-
-
+        //Load map and setup map renderer
+        maploader = new TmxMapLoader();
+        map = maploader.load("Level3/level3.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map, 1  / Prototype.PPM);
 
         //initially set gamcam to be centered correctly at the start of of map
-        //camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+        gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
-        //creator = new B2WorldCreator(this);
+        //create Box2D world, with no gravity in X, -10 gravity in Y, and allow bodies to sleep
+        world = new World(new Vector2(0, -10), true);
+        //allows for debug lines of box2d world.
+        b2dr = new Box2DDebugRenderer();
 
+        creator = new B2WorldCreator3(this);
+
+        //create knight
+        player = new Knight(this, 50, 100);
         world.setContactListener(new WorldContactListener());
+
     }
 
-    public void update(float dt)
-    {
-        // set tile map view
-        renderer.setView(camera);
+    @Override
+    public void show() { }
 
-        // 1 step in the physics simulation (60 per second)
+    public void handleInput(float dt){
+        //control player
+        if(player.currentState != Knight.State.DEAD) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.W))
+                player.jump();
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2 || Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2)
+                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2 || Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
+                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+        }
+    }
+
+    public void update(float dt){
+        //handle user input
+        handleInput(dt);
+
+        //takes 1 step in the physics simulation(60 times per second)
         world.step(1 / 60f, 6, 2);
 
-        // enable player to control their character
-        playerControls();
         player.update(elapsedTime, dt);
-
-        // attach camera to player's x coordinate
-        if (player.currentState != Knight.State.DEAD)
-        {
-            camera.position.x = player.getX();
+        for(Enemy enemy : creator.getEnemies()){
+            enemy.update(elapsedTime, dt);
         }
-
-        //update camera with correct coordinates
-        camera.update();
         hud.update(dt);
 
-        //tell renderer to draw only what camera can see in game world.
-        renderer.setView(camera);
-
-        game.batch.setProjectionMatrix(camera.combined);
-
-        game.batch.begin();
-        player.draw(game.batch);
-        game.batch.end();
-    }
-
-    @Override
-    public World getWorld() {
-        return world;
-    }
-
-    @Override
-    public Hud getHud() {
-        return hud;
-    }
-
-    @Override
-    public TiledMap getMap() {
-        return map;
-    }
-
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void render(float delta)
-    {
-        update(Gdx.graphics.getDeltaTime());
-
-        Gdx.gl.glClearColor(0f, 0f, 1f, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        game.batch.begin();
-        player.draw(game.batch);
-        game.batch.end();
-
-        // render tile map
-        renderer.render();
-
-        b2dr.render(world, camera.combined.scl(PPM));
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
-        {
-            debugOn = !debugOn; // TODO: replace with a pause screen
+        //attach gamecam to player's x coordinate
+        if(player.currentState != Knight.State.DEAD) {
+            gamecam.position.x = player.b2body.getPosition().x;
+            gamecam.position.y = player.b2body.getPosition().y;
         }
 
-        /// player mechanics ///
+        //update gamecam with correct coordinates
+        gamecam.update();
+        //tell renderer to draw only what camera can see in game world.
+        renderer.setView(gamecam);
 
-        // if player falls to bottom of screen, kill them
-        if (player.getY() < 0)
-        {
+    }
+
+    @Override
+    public void render(float delta) {
+        //separate update logic from render
+        update(delta);
+
+        //Clear the game screen with Black
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //render tile map
+        renderer.render();
+
+        //renderer Box2DDebug lines
+        b2dr.render(world, gamecam.combined);
+
+        game.batch.setProjectionMatrix(gamecam.combined);
+        game.batch.begin();
+        player.draw(game.batch);
+        for(Enemy enemy : creator.getEnemies()){
+            enemy.draw(game.batch);
+        }
+        game.batch.end();
+
+        //Set batch to draw what the Hud camera sees.
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
+
+        if(player.getY() < 0){
             player.die();
         }
 
-        if(gameOver())
-        {
+        if(gameOver()){
             game.setScreen(new GameOverScreen(game));
             dispose();
         }
 
-        if (player.getLevelComplete())
-        {
-            //game.setScreen(new Win(game)); // TODO: Create Win Screen
-        }
-
-        /// end player mechanics ///
-
         elapsedTime += delta;
+
+        /*if (player.LevelComplete()) {
+            game.setScreen(new Win(game));
+        }*/
+
     }
 
-    @Override
-    public void resize(int width, int height)
-    {
-        camera.setToOrtho(false, width/SCALE, height/SCALE);
-    }
-
-    // player controls
-    public void playerControls()
-    {
-        if (player.currentState != Knight.State.DEAD)
-        {
-            // walk left
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2 || Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
-                player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
-
-            // walk right
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2 || Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2)
-                player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-
-            // jump
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.W))
-                player.jump();
-        }
-    }
-
-    @Override
-    public void pause() {}
-
-    @Override
-    public void resume() {}
-
-    @Override
-    public void hide() {}
-
-    public boolean gameOver()
-    {
-        if(player.currentState == Knight.State.DEAD && player.getStateTimer() > 3)
+    public boolean gameOver(){
+        if(player.currentState == Knight.State.DEAD && player.getStateTimer() > 3){
             return true;
-
+        }
         return false;
     }
 
     @Override
-    public void dispose()
-    {
+    public void resize(int width, int height) {
+        gamePort.update(width,height);
+    }
+
+    public TiledMap getMap(){
+        return map;
+    }
+    @Override
+    public World getWorld(){
+        return world;
+    }
+
+    @Override
+    public void pause() { }
+
+    @Override
+    public void resume() { }
+
+    @Override
+    public void hide() { }
+
+    @Override
+    public void dispose() {
+        map.dispose();
+        renderer.dispose();
         world.dispose();
         b2dr.dispose();
-        renderer.dispose();
-        map.dispose();
         hud.dispose();
     }
+
+    @Override
+    public Hud getHud(){ return hud; }
 }
