@@ -35,7 +35,7 @@ public abstract class Enemy extends Sprite {
     public abstract void hit();
     public abstract void hitByEnemy(Enemy enemy);
 
-    // Reverses the enmies velocity so that it moves the opposite direction.
+    // Reverses the enemies velocity so that it moves the opposite direction.
     public void reverseVelocity(boolean x, boolean y){
         if(x){
             velocity.x = -velocity.x;

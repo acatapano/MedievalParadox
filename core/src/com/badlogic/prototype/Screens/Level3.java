@@ -141,7 +141,7 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
         renderer.render();
 
         //renderer Box2DDebug lines
-        b2dr.render(world, gamecam.combined);
+        // b2dr.render(world, gamecam.combined);
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();

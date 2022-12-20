@@ -88,6 +88,8 @@ public class Knight extends Sprite {
         //define Knight in Box2d
         defineKnight(startingX, startingY);
 
+        attack.setActive(false);
+
         //set initial values for knight's location, width, and height. And initial frame as the first idle frame.
         setBounds(0, 0, 16 / Prototype.PPM, 16 / Prototype.PPM);
         setRegion(idleFrames.get(0));
@@ -213,16 +215,20 @@ public class Knight extends Sprite {
     }
 
     public void defineKnight(float startingX, float startingY){
+        // Creates knight body.
         BodyDef bdef = new BodyDef();
         setPosition(startingX/ Prototype.PPM,startingY/ Prototype.PPM);
         bdef.position.set(getX() + getWidth() / 2, getY() + getHeight() / 2);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
+
+        // Creates attack body.
         BodyDef adef = new BodyDef();
         adef.position.set(getX()+getWidth()+(10/Prototype.PPM),getY()+getHeight()/2);
         adef.type=BodyDef.BodyType.KinematicBody;
         attack=world.createBody(adef);
 
+        // Creates knight fixture with contact filters.
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(7/ Prototype.PPM,13/ Prototype.PPM);
@@ -234,6 +240,8 @@ public class Knight extends Sprite {
         fdef.shape = shape;
         fdef.friction = .5f;
         b2body.createFixture(fdef).setUserData(this);
+
+        // Creates attack fixture.
         FixtureDef afdef = new FixtureDef();
         afdef.filter.categoryBits=Prototype.ATTACK_BIT;
         afdef.filter.maskBits=Prototype.ENEMY_BIT;
@@ -262,10 +270,12 @@ public class Knight extends Sprite {
     public void beginAttack()
     {
         attacking=true;
+        attack.setActive(true);
     }
     public void endAttack()
     {
         attacking=false;
+        attack.setActive(false);
     }
     public static boolean isViolent()
     {
