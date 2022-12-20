@@ -76,7 +76,7 @@ public class ControlsMenu implements Screen
         {
             music.stop();
             music.dispose();
-            game.setScreen(new Credits(game)); // change this line to skip levels
+            game.setScreen(new Level1(game)); // change this line to skip levels
             dispose();
         }
         // press Esc to go back to story screen
