@@ -1,6 +1,7 @@
 package com.badlogic.prototype.Sprites.Enemies;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -17,6 +18,9 @@ import com.badlogic.prototype.Sprites.Knight;
 public class Tank extends com.badlogic.prototype.Sprites.Enemies.Enemy{
     // Tank States.
     public enum State { ALIVE, DEAD };
+
+    // Sound effects:
+    private Sound deathSound;
 
     // Tank animation and sprite variables.
     private float stateTimer;
@@ -42,6 +46,9 @@ public class Tank extends com.badlogic.prototype.Sprites.Enemies.Enemy{
         currentState = State.ALIVE;
         previousState = State.ALIVE;
 
+        // Set up deathSound
+        deathSound = Gdx.audio.newSound(Gdx.files.internal("big-impact-7054.mp3"));
+
         // Sets up tank atlas and and animation frames.
         atlas = new TextureAtlas(Gdx.files.internal("Enemies/Tank/Tank.atlas"));
         moveFrames = atlas.findRegions("move");
@@ -62,6 +69,7 @@ public class Tank extends com.badlogic.prototype.Sprites.Enemies.Enemy{
     public void update(float elapsedTime, float dt){
         stateTimer += dt;
         if(setToDestroy && !destroyed){
+            deathSound.play();
             world.destroyBody(b2body);
             destroyed = true;
             stateTimer = 0;

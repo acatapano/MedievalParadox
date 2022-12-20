@@ -1,6 +1,7 @@
 package com.badlogic.prototype.Sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -23,6 +24,11 @@ public class Knight extends Sprite {
     public enum State { FALLING, JUMPING, STANDING, WALKING, RUNNING, DEAD, ATTACK };
     public State currentState;
     public State previousState;
+
+    // Sound effects:
+    private Sound jumpSound;
+    private Sound dieSound;
+    private Sound attackSound;
 
     // Box2D
     public World world;
@@ -67,6 +73,12 @@ public class Knight extends Sprite {
         attacking=false;
         levelComplete = false;
 
+        // Set up sound effects.
+        jumpSound = Gdx.audio.newSound(Gdx.files.internal("cartoon-jump-6462.mp3"));
+        dieSound = Gdx.audio.newSound(Gdx.files.internal("male_hurt7-48124.mp3"));
+        attackSound = Gdx.audio.newSound(Gdx.files.internal("swinging-staff-whoosh-strong-08-44658.mp3"));
+
+        // Sets up all player animations and frames using the atlas labels.
         textureAtlas = new TextureAtlas(Gdx.files.internal("player/blue1.atlas"));
         idleFrames = textureAtlas.findRegions("idle");
         idleAnimation = new Animation(1/10f, idleFrames);
@@ -83,6 +95,7 @@ public class Knight extends Sprite {
         walkingFrames = textureAtlas.findRegions("walk");
         walkingAnimation = new Animation(1/10f, walkingFrames); //f was missing here, fixed
 
+        // Sets knight scale to 3x
         setScale(3f);
 
         //define Knight in Box2d
@@ -196,6 +209,7 @@ public class Knight extends Sprite {
     public void die() {
         if (!isDead()) {
             knightIsDead = true;
+            dieSound.play();
         }
     }
 
@@ -211,6 +225,7 @@ public class Knight extends Sprite {
         if ( currentState != State.JUMPING ) {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
             currentState = State.JUMPING;
+            jumpSound.play();
         }
     }
 
@@ -271,6 +286,8 @@ public class Knight extends Sprite {
     {
         attacking=true;
         attack.setActive(true);
+        attackSound.play();
+
     }
     public void endAttack()
     {
