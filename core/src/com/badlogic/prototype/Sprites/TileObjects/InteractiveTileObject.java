@@ -16,7 +16,9 @@ import com.badlogic.prototype.Prototype;
 import com.badlogic.prototype.Screens.Level;
 import com.badlogic.prototype.Sprites.Knight;
 
+// Creates an abstract InteractiveTileObject for all interactive tile objects that will be generated.
 public abstract class InteractiveTileObject {
+    // All variables needed to create/set up an InteractiveTileObject.
     protected World world;
     protected TiledMap map;
     protected Rectangle bounds;
@@ -27,39 +29,40 @@ public abstract class InteractiveTileObject {
     protected Fixture fixture;
 
     public InteractiveTileObject(Level screen, MapObject object){
+        // Initializes all variables.
         this.object = object;
         this.screen = screen;
         this.world = screen.getWorld();
         this.map = screen.getMap();
         this.bounds = ((RectangleMapObject) object).getRectangle();
 
+        // Sets up box2d variables for object.
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
 
+        // Makes the object a StaticBody that cannot move/be affected by impulses.
         bdef.type = BodyDef.BodyType.StaticBody;
+        // Sets the bdef sets to the map object's.
         bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / Prototype.PPM, (bounds.getY() + bounds.getHeight() / 2) / Prototype.PPM);
-
+        // Creates the body in the world.
         body = world.createBody(bdef);
 
+        // Sets the shape of the fdef to tht of the map object's.
         shape.setAsBox(bounds.getWidth() / 2 / Prototype.PPM, bounds.getHeight() / 2 / Prototype.PPM);
         fdef.shape = shape;
         fixture = body.createFixture(fdef);
 
     }
 
+    // Abstract onHit() function for when the object hits the knight.
     public abstract void onHit(Knight knight);
 
+    // Method for setting the object's filter according to the type of interactive tile object it is.
     public void setCategoryFilter(short filterBit){
         Filter filter = new Filter();
         filter.categoryBits = filterBit;
         fixture.setFilterData(filter);
-    }
-
-    public TiledMapTileLayer.Cell getCell(){
-        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
-        return layer.getCell((int)(body.getPosition().x * Prototype.PPM / 16),
-                (int)(body.getPosition().y * Prototype.PPM / 16));
     }
 
 }

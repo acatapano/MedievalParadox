@@ -30,9 +30,9 @@ public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1
     private Prototype game;
 
     // Sets up camera, Viewport, and Hud for the level screen.
-    private OrthographicCamera gamecam;
-    private Viewport gamePort;
-    private Hud hud;
+    private OrthographicCamera gamecam;             // What is displayed.
+    private Viewport gamePort;                      // Controls what the tile map renderer and the camera sees.
+    private Hud hud;                                // Holds the level's HUD.
 
     // Tile map variables:
     private TmxMapLoader maploader;                 // Used to load the tilemap.
@@ -42,22 +42,21 @@ public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1
     //Box2d variables:
     private World world;                            // Used to contain all box2d bodies and set up physics.
     private Box2DDebugRenderer b2dr;                // Used to render debug lines.
-    private B2WorldCreator creator;                 //
+    private B2WorldCreator creator;                 // Used to create all of the box2d objects on the fro the tile map.
 
     //Sprites
-    private Knight player;
+    private Knight player;                          // Holds the player body.
 
-    private float elapsedTime;
+    private float elapsedTime;                      // Holds the time elapsed since the level was started.
 
     Music music;
 
     public Level1(Prototype game)
     {
-        this.game = game;
-        //create cam to follow knight through level
-        gamecam = new OrthographicCamera();
+        this.game = game;                           // Sets the screen's game = to the current game.
+        gamecam = new OrthographicCamera();         // Creates cam to follow knight through level.
 
-        //create a FitViewport to maintain virtual aspect ratio despite screen size
+        // Creates a FitViewport to maintain virtual aspect ratio despite screen size.
         gamePort = new FitViewport(Prototype.V_WIDTH / Prototype.PPM, Prototype.V_HEIGHT / Prototype.PPM, gamecam);
 
         // start music
@@ -66,27 +65,29 @@ public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1
         music.setLooping(true);
         music.play();
 
-        //create game HUD
+        // Create game HUD.
         hud = new Hud(game.batch, "1");
 
-        //Load map and setup map renderer
+        // Loads map and sets up map renderer.
         maploader = new TmxMapLoader();
-        map = maploader.load("Level1/level1.tmx");
+        map = maploader.load("Level1/level1.tmx"); // Tile map for Level 1 is located at "Level1/level1.tmx"
         renderer = new OrthogonalTiledMapRenderer(map, 1  / Prototype.PPM);
 
-        //initially set gamcam to be centered correctly at the start of of map
+        // Initially sets gamcam to be centered correctly at the start of of map
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
-        //create Box2D world, with no gravity in X, -10 gravity in Y, and allow bodies to sleep
+        // Create Box2D world, with no gravity in X, -10 gravity in Y, and allow bodies to sleep.
         world = new World(new Vector2(0, -10), true);
-        //allows for debug lines of box2d world.
+        // Allows for debug lines of box2d world.
         b2dr = new Box2DDebugRenderer();
 
+        // Creates the B2WorldCreator which creates all of the physics bodies off of the tile map's object layers.
         creator = new B2WorldCreator(this);
 
-        //create knight
+        // Creates knight with a starting position of (50, 100)
         player = new Knight(this, 50, 100);
 
+        // Sets the world's contact listener to the new listener to dictate all world collisions.
         world.setContactListener(new WorldContactListener());
 
     }
@@ -94,88 +95,101 @@ public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1
     @Override
     public void show() { }
 
-    public void handleInput(float dt){
+    public void handleInput(float dt){ // Makes knight react off player input.
         //control player
         if(player.currentState != Knight.State.DEAD) {
+            // If the player presses the spacebar, "W", or the up arrow key, the knight will jump.
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.W))
                 player.jump();
+            // If the player presses the right arrow key or "D" and the knight's current velocity is <= 2 the knight will move right by applying a positive velocity in the x direction to its body.
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2 || Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2)
                 player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
+            // If the player presses the left arrow key or "A" and the knight's current velocity is <= -2 the knight will move right by applying a negative velocity in the x direction to its body.
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2 || Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
                 player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
         }
     }
 
     public void update(float dt){
-        //handle user input
+        // Handles user input.
         handleInput(dt);
 
-        //takes 1 step in the physics simulation(60 times per second)
+        // Takes 1 step in the physics simulation (60 times per second).
         world.step(1 / 60f, 6, 2);
 
+        // Updates the player.
         player.update(elapsedTime, dt);
+        // Updates each enemy in the level.
         for(Enemy enemy : creator.getEnemies()){
             enemy.update(elapsedTime, dt);
         }
+        // Updates the HUD.
         hud.update(dt);
 
-        //attach gamecam to player's x coordinate
+        // Attaches gamecam to player's x and y coordinates.
         if(player.currentState != Knight.State.DEAD) {
             gamecam.position.x = player.b2body.getPosition().x;
             gamecam.position.y = player.b2body.getPosition().y;
         }
 
-        //update gamecam with correct coordinates
+        // Updates gamecam with the new coordinates.
         gamecam.update();
-        //tell renderer to draw only what camera can see in game world.
+        // Tells the tile map renderer to draw only what camera can see in game world.
         renderer.setView(gamecam);
 
     }
 
     @Override
     public void render(float delta) {
-        //separate update logic from render
+        // Updates everything that has to be updated every frame.
         update(delta);
 
-        //Clear the game screen with Black
+        // Clears the game screen with Black.
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //render tile map
+        // Renders the tile map.
         renderer.render();
 
-        //renderer Box2DDebug lines
+        // Renders Box2DDebug lines.
         b2dr.render(world, gamecam.combined);
 
+        // Sets the batch's projection matrix to the gamecam.combined.
         game.batch.setProjectionMatrix(gamecam.combined);
-        game.batch.begin();
+        game.batch.begin(); // Begins the batch.
+        // Draws the player and all enemies in the level in the batch.
         player.draw(game.batch);
         for(Enemy enemy : creator.getEnemies()){
             enemy.draw(game.batch);
         }
-        game.batch.end();
+        game.batch.end();   // Ends the batch.
 
-        //Set batch to draw what the Hud camera sees.
+        // Sets batch to draw what the Hud camera sees.
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
+        hud.stage.draw(); // Draws the Hud on the screen.
 
+        // Kills the player if they fall off the map.
         if(player.getY() < 0){
             player.die();
         }
 
+        // Sends the player to the Game Over Screen if the knight dies.
         if(gameOver()){
             game.setScreen(new GameOverScreen(game));
             dispose();
         }
 
+        // If the level is completed, the game progresses to the next screen/level.
         if (player.getLevelComplete()) {
             game.setScreen(new Level2(game));
         }
 
+        // Increments elapsedTime every frame.
         elapsedTime += delta;
 
     }
 
+    // If the knight is dead for more than 3 seconds, sends the player to the Game Over screen when called.
     public boolean gameOver(){
         if(player.currentState == Knight.State.DEAD && player.getStateTimer() > 3){
             return true;
@@ -183,15 +197,19 @@ public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1
         return false;
     }
 
+    // Resizes the screen if the window is expanded or made smaller.
     @Override
     public void resize(int width, int height) {
         gamePort.update(width,height);
     }
 
+    // Returns the tile map.
     @Override
     public TiledMap getMap(){
         return map;
     }
+
+    // Returns the world.
     @Override
     public World getWorld(){
         return world;
@@ -206,6 +224,7 @@ public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1
     @Override
     public void hide() { }
 
+    // Disposes of everything after the level is closed.
     @Override
     public void dispose() {
         map.dispose();
@@ -216,6 +235,7 @@ public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1
         music.dispose();
     }
 
+    // Returns the HUD.
     @Override
     public Hud getHud(){ return hud; }
 }

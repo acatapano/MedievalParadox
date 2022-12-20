@@ -27,7 +27,6 @@ public class Knight extends Sprite {
     // Box2D
     public World world;
     public Body b2body;
-    public Body attkBody;
 
     // Atlas and Animations
     private TextureAtlas textureAtlas;
@@ -103,15 +102,6 @@ public class Knight extends Sprite {
         //setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setPosition(b2body.getPosition().x - getWidth()*1.5f, b2body.getPosition().y - getHeight()/1.1f);
 
-        //sets attack box in proper position with player
-        if(runningRight)
-        {
-            attkBody.setTransform(new Vector2(b2body.getPosition().x+(10/Prototype.PPM),b2body.getPosition().y),0f);
-        }
-        else
-        {
-            attkBody.setTransform(new Vector2(b2body.getPosition().x-(10/Prototype.PPM),b2body.getPosition().y),0f);
-        }
         //update sprite with the correct frame depending on knight's current action
         setRegion(getFrame(elapsedTime, dt));
     }
@@ -207,38 +197,22 @@ public class Knight extends Sprite {
 
     public void defineKnight(float startingX, float startingY){
         BodyDef bdef = new BodyDef();
-        BodyDef attkBodyDef = new BodyDef();
         setPosition(startingX/ Prototype.PPM,startingY/ Prototype.PPM);
         bdef.position.set(getX() + getWidth() / 2, getY() + getHeight() / 2);
         bdef.type = BodyDef.BodyType.DynamicBody;
-        attkBodyDef.position.set(getX()+getWidth()+(10/Prototype.PPM),getY()+getHeight()/2);
-        attkBodyDef.type=BodyDef.BodyType.KinematicBody;
         b2body = world.createBody(bdef);
-        attkBody=world.createBody(attkBodyDef);
 
         FixtureDef fdef = new FixtureDef();
-        FixtureDef attkFixDef = new FixtureDef();
-        PolygonShape bodShape = new PolygonShape();
-        bodShape.setAsBox(7/ Prototype.PPM,13/ Prototype.PPM);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(7/ Prototype.PPM,13/ Prototype.PPM);
         fdef.filter.categoryBits = Prototype.KNIGHT_BIT;
         fdef.filter.maskBits = Prototype.GROUND_BIT |
                 Prototype.SPIKE_BIT |
                 Prototype.GOAL_BIT |
                 Prototype.ENEMY_BIT;
-        fdef.shape = bodShape;
+        fdef.shape = shape;
         fdef.friction = .5f;
-        PolygonShape attkShape = new PolygonShape();
-        attkShape.setAsBox(7/Prototype.PPM,13/Prototype.PPM);
-        attkFixDef.shape=attkShape;
-        attkFixDef.friction=0f;
-        attkFixDef.density=0f;
-        attkFixDef.isSensor=true;
-        attkFixDef.filter.categoryBits=Prototype.ATTACK_BIT;
-        attkFixDef.filter.maskBits=Prototype.ENEMY_BIT;
         b2body.createFixture(fdef).setUserData(this);
-        attkBody.createFixture(attkFixDef).setUserData(this);
-        bodShape.dispose();
-        attkShape.dispose();
     }
 
     public void draw(Batch batch){

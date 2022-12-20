@@ -20,6 +20,7 @@ import com.badlogic.prototype.Sprites.Knight;
 import com.badlogic.prototype.Tools.B2WorldCreator2;
 import com.badlogic.prototype.Tools.WorldContactListener;
 
+// Refer to Level1 for comments. Code is the same besides some minor details that don't change the functionality of the code.
 public class Level2 extends com.badlogic.prototype.Screens.Level{
     //Reference to Game, used to set Screens
     private Prototype game;

@@ -16,10 +16,11 @@ import com.badlogic.prototype.Sprites.Enemies.Enemy;
 import com.badlogic.prototype.Sprites.Enemies.Tank;
 import com.badlogic.prototype.Sprites.TileObjects.Spike;
 
+// Generates box2d bodies for level3 tile map. Refer to B2WorldCreator comments. No significant changes in code.
 public class B2WorldCreator3 {
     public Array<Tank> tanks;
 
-    public B2WorldCreator3(Level3 screen){
+    public B2WorldCreator3(Level3 screen) {
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
         //create body and fixture variables
@@ -29,7 +30,7 @@ public class B2WorldCreator3 {
         Body body;
 
         //create ground bodies/fixtures
-        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / Prototype.PPM, (rect.getY() + rect.getHeight() / 2) / Prototype.PPM);
@@ -43,7 +44,7 @@ public class B2WorldCreator3 {
             body.createFixture(fdef);
         }
 
-        for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             new Spike(screen, object);
         }
 
@@ -53,7 +54,7 @@ public class B2WorldCreator3 {
             tanks.add(new Tank(screen, rect.getX() / Prototype.PPM, rect.getY() / Prototype.PPM, 0.3f, -0.1f));
         }
 
-        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / Prototype.PPM, (rect.getY() + rect.getHeight() / 2) / Prototype.PPM);
@@ -63,10 +64,9 @@ public class B2WorldCreator3 {
             fdef.filter.categoryBits = Prototype.BARRIER_BIT;
             fdef.filter.maskBits = Prototype.ENEMY_BIT;
             body.createFixture(fdef).setUserData(this);
-            // body.createFixture(fdef);
         }
 
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / Prototype.PPM, (rect.getY() + rect.getHeight() / 2) / Prototype.PPM);
@@ -76,13 +76,8 @@ public class B2WorldCreator3 {
             fdef.filter.categoryBits = Prototype.GOAL_BIT;
             fdef.filter.maskBits = Prototype.KNIGHT_BIT;
             body.createFixture(fdef).setUserData(this);
-            // body.createFixture(fdef);
         }
 
-    }
-
-    public Array<Tank> getTanks(){
-        return tanks;
     }
 
     public Array<Enemy> getEnemies(){

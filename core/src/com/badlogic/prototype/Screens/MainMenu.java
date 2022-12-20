@@ -3,7 +3,6 @@ package com.badlogic.prototype.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,30 +17,10 @@ public class MainMenu implements Screen
     Texture backgroundTex;
     Sprite backgroundSprite;
 
-    Music music;
-
     public MainMenu(Prototype game)
     {
         this.game = game;
 
-        // start music
-        music = Gdx.audio.newMusic(Gdx.files.internal("2019-06-14_-_Warm_Light_-_David_Fesliyan.mp3"));
-        music.setVolume(0.3f);
-        music.setLooping(true);
-        music.play();
-
-        init();
-    }
-
-    public MainMenu(Prototype game, Music music)
-    {
-        this.game = game;
-        this.music = music;
-        init();
-    }
-
-    private void init()
-    {
         backgroundTex = new Texture(Gdx.files.internal("mainmenu_bg.png"));
         backgroundSprite = new Sprite(backgroundTex);
         backgroundSprite.setSize(640, 500);
@@ -71,9 +50,9 @@ public class MainMenu implements Screen
         game.batch.end();
         // end batch
 
-        if (Gdx.input.justTouched())
+        if (Gdx.input.isTouched())
         {
-            game.setScreen(new StoryMenu(game, music));
+            game.setScreen(new StoryMenu(game));
             dispose();
         }
     }
