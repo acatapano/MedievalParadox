@@ -1,5 +1,6 @@
 package com.badlogic.prototype.Scenes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -14,8 +15,6 @@ import com.badlogic.prototype.Prototype;
 
 public class Hud implements Disposable{
 
-    // Hello this is a comment
-
     //Scene2D.ui Stage and its own Viewport for HUD
     public Stage stage;
     private Viewport viewport;
@@ -24,7 +23,8 @@ public class Hud implements Disposable{
     private Integer worldTimer;
     private boolean timeUp; // true when the world timer reaches 0
     private float timeCount;
-    private static Integer score;
+    private String level;
+
 
     //Scene2D widgets
     private Label countdownLabel;
@@ -34,15 +34,26 @@ public class Hud implements Disposable{
     private Label worldLabel;
     private Label healthLabel;
 
-    public Hud(SpriteBatch sb){
+    private OrthographicCamera camera; ////////////////////////////////////
+    private final float SCALE = 2.0f; /////////////////////////////////////
+
+    public Hud(SpriteBatch sb, String level){
         //define tracking variables
         worldTimer = 300;
         timeCount = 0;
-        score = 0;
+        this.level = level;
 
         //setup the HUD viewport using a new camera seperate from gamecam
         //define stage using that viewport and games spritebatch
-        viewport = new FitViewport(Prototype.V_WIDTH, Prototype.V_HEIGHT, new OrthographicCamera());
+//        viewport = new FitViewport(Prototype.V_WIDTH, Prototype.V_HEIGHT, new OrthographicCamera());
+//        stage = new Stage(viewport, sb);
+
+        float width = Gdx.graphics.getWidth();
+        float height = Gdx.graphics.getHeight();
+        camera = new OrthographicCamera(); /////////////////////////////////////
+        camera.setToOrtho(false, width/SCALE, height/SCALE); ///////////////////
+
+        viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
         stage = new Stage(viewport, sb);
 
         //define a table used to organize hud's labels
@@ -56,7 +67,7 @@ public class Hud implements Disposable{
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         barLabel =new Label("BAR", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label(level, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         worldLabel = new Label("LEVEL", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         healthLabel = new Label("HEALTH", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
@@ -72,7 +83,6 @@ public class Hud implements Disposable{
 
         //add table to the stage
         stage.addActor(table);
-
     }
 
     public void update(float dt){
@@ -89,7 +99,9 @@ public class Hud implements Disposable{
     }
 
     @Override
-    public void dispose() { stage.dispose(); }
+    public void dispose() {
+        stage.dispose();
+    }
 
     public boolean isTimeUp() { return timeUp; }
 }

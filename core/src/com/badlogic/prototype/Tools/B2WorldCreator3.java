@@ -16,10 +16,10 @@ import com.badlogic.prototype.Sprites.Enemies.Enemy;
 import com.badlogic.prototype.Sprites.Enemies.Tank;
 import com.badlogic.prototype.Sprites.TileObjects.Spike;
 
-public class B2WorldCreator {
+public class B2WorldCreator3 {
     public Array<Tank> tanks;
 
-    public B2WorldCreator(Level1 screen){
+    /*public B2WorldCreator3(Level3 screen){
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
         //create body and fixture variables
@@ -89,5 +89,5 @@ public class B2WorldCreator {
         Array<Enemy> enemies = new Array<Enemy>();
         enemies.addAll(tanks);
         return enemies;
-    }
+    }*/
 }

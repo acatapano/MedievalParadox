@@ -1,39 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="90" height="13" tilewidth="24" tileheight="24" infinite="0" nextlayerid="20" nextobjectid="37">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="90" height="13" tilewidth="24" tileheight="24" infinite="0" nextlayerid="24" nextobjectid="43">
  <tileset firstgid="1" source="Backgrounds2.tsx"/>
  <tileset firstgid="4" source="Ground2.tsx"/>
  <tileset firstgid="319" source="Spikes.tsx"/>
  <tileset firstgid="323" source="Decorations2.tsx"/>
- <imagelayer id="15" name="B1" repeatx="1">
-  <image source="background/background_layer_1.png" width="555" height="312"/>
- </imagelayer>
- <imagelayer id="16" name="B2" repeatx="1">
-  <image source="background/background_layer_2.png" width="555" height="312"/>
- </imagelayer>
- <imagelayer id="17" name="B3" repeatx="1">
-  <image source="background/background_layer_3.png" width="555" height="312"/>
- </imagelayer>
- <layer id="5" name="Decorations" width="90" height="13">
+ <tileset firstgid="337" source="bl1t.tsx"/>
+ <tileset firstgid="636" source="bl2t.tsx"/>
+ <tileset firstgid="935" source="b13t.tsx"/>
+ <layer id="20" name="B1" width="90" height="13" locked="1">
   <data encoding="base64" compression="zlib">
-   eJzt1CEKACAQRUG9m0EU738d6wYtIggyEzf98jYlAID/jPx6AfyvhM5WzdVNh7t71A8bjpuaPwBw3QResgJQ
+   eJztzOefzwUAAOCfMyshpSIhW6RBkkpkJKRuL9ye3Bm3TyUrIy0aWhpGdmW1qWgQLWVUtNAu2qXoeeXT93/4vnjePtE1IpEYYokjngQSSSKZFFIZzghGkkY6GWSSRTY55JJHdHgfv/MpoJBRjKaIYsYwlnGMp4RSyiingkqqqGYCN3AjN4V34J7IzUxiMlOYyjRuYTozmMksbmU2t3E7d3AndzGHudzNPeEduO/lPuZxPw/wIA/xMPN5hEd5jMdZwEIWsZgnWMJSlrGcFeEduFeyiid5iqdZzRrWso71PMOzPMfzvMCLvMQGNvIyr/Aqm8I7cG/mNV7nDd5kC1t5i21s523e4V3e43128AEfspNd7GYPH4V34P6YT9jLPj7lMz7nC75kPwc4yFd8zTd8y3d8zw/8yE8c4nB4B+6f+YVf+Y3f+YM/+Yu/OcI//MtRjhGJikRqEEVNalGbOtSlXlR4//8+gRM5ifqcTAMa0ohTaMypnEYTTucMzqQpzTiL5pxNC1qGd+BuxTm0pg1taUd7OtCRTpxLZ7pwHl05nwu4kIvoRncupkd4B+5L6Mml9OIyLucKenMlfejLVfSjPwMYyNUM4hoGM4ShXBvegXsY13E90cQQSxzxJJBIEsmkkMpwRjCSNNLJIJMsssM7cOeQSx75FFDIKEZTRDFjGMs4xlNCKWWUU0ElVVQzIbwD93+L7zyw
   </data>
  </layer>
- <layer id="12" name="Grass" width="90" height="13">
+ <layer id="21" name="B2" width="90" height="13" locked="1">
+  <data encoding="base64" compression="zlib">
+   eJztzOefzwUAAOBfd6WktPdOScNKC0k7KxVNSTIK0RBK7ozbd8btPbk7acoIkRENDYkyEsoI2WWUmeeVT9//4fviefvEREUisQxlGMMZQRzxJJBIEsmkkEoaIxnFaMaQTgaZZBET3sfvbHLIJY98CiikiGJKKKWMcioYyzgqqaKa8bzDBN4N78D9Hu/zAR/yERP5mElMZgpT+YRpTGcGnzKTWXzGbOYwl3nhHbg/Zz4L+IIv+YqvWcg3fMt3fM8ifmAxP7KEpfzEzyxjOSvCO3Cv5BdW8SurWcNafuN31rGeDWzkDzaxmS38yVa2sZ0d7AzvwL2L3fzF3+xhL/vYzz/8ywEOcojDHOEo/xGJjkROIIpoTuSk6PD+/12DkzmFmpxKLU7jdGpzBmdyFmdzDudyHudzARdyERdzCZeGd+C+jMu5giu5iqupwzVcS12uox7XcwM3chP1aUBDGtGYm2kS3oH7Fm7lNm7nDprSjObcSQvuoiV3cw/3ch/38wAP8hCtaE2b8A7cbWnHw7TnER7lMTrQkcd5gid5iqd5hk48S2eeowvP05UXwjtwd6M7PejJi7xEL3rTh5fpSz9e4VVe43X68wYDGMgg3uSt8A7cg3mbIcQQy1CGMZwRxBFPAokkkUwKqaQxklGMZgzp4R24M8gki2xyyCWPfAoopIhiSiiljHIqGMs4KqmimvHhHbiPAQ8xXnA=
+  </data>
+ </layer>
+ <layer id="22" name="B3" width="90" height="13" locked="1">
+  <data encoding="base64" compression="zlib">
+   eJztzOef1wMAAOAfd4iszEJImZXRsMoqoyHZlOyRlpCSUSlEUmhTKYrb1911e++90jRCZjRshdbzqo/v//B98bx9YqIikVjiiCeBRJJIZgUppJLGStLJIJMssskhlzzyKSAmvPffhRRRTAmllFFOBZVUUU0NtdRRTwONNNHMKj5hNWvCO3CvZR3r2cCnfMbnfMFGvuQrvmYT3/At3/E9P/Ajm/mJn9kS3oF7K9vYzi/8ym/8zh/8yV/8zQ528g//8h+72M0e9hKJjkQO4MDo8P7/HUU0B3Ewh9CCQzmMlhzOERzJURxNK47hWI7jeE7gRFrTJrwD90mczCm05VRO43TacQbt6cCZnMXZnMO5nEdHOtGZ87mAC8M7cF9EF7rSje5czCVcymVcTg96cgVXchVXcw296M21XMf13BDegbsPfelHf25kADcxkJu5hVu5jdu5gzu5i7sZxGDuYQj3cl94B+77eYAHeYiHeYRHeYyhPM4whjOCkYziCUbzJE/xNGN4hrHhHbjH8SzjeY7neYEXmcBEJvESk5nCy7zCq0zlNV5nGm8wnTfDO3DPYCZv8TbvMIvZzGEu85jPAt7lPRayiMW8zxKW8gEfsiy8A/dyPuJjYogljngSSCSJZFaQQipprCSdDDLJIpsccsM7cOeRTwGFFFFMCaWUUU4FlVRRTQ211FFPA4000cyq8A7c+wDgCoAw
+  </data>
+ </layer>
+ <layer id="5" name="Decorations" width="90" height="13" locked="1">
+  <data encoding="base64" compression="zlib">
+   eJzt1CEOACAIRmG8m8Hp3Lz/aax/kGJhg/dFEoSHGQAAQD67RW8A5Nels1dzw+nQm6v12bDuNAv9gVPoVgCxLsYwAqE=
+  </data>
+ </layer>
+ <layer id="12" name="Grass" width="90" height="13" locked="1">
   <data encoding="base64" compression="zlib">
    eJzt1EEOABAMRNE6HO5/IyvRdEFURKL/HcAohggAAPhdTq93cF8xM0aYGdCq882fdKX3bpVtM2xfZ2vv0lneM8Fg746/NRZvD/G3BnsEBCY=
   </data>
  </layer>
- <layer id="11" name="Traps" width="90" height="13">
+ <layer id="11" name="Traps" width="90" height="13" locked="1">
   <data encoding="base64" compression="zlib">
    eJzt08EJACAMBEHtzP6r8utLBMFwOFPB5iCtAQC/Gb26oE7V7embJ/Unta5Su1+53ce+cM6/sDMBN8MCSg==
   </data>
  </layer>
- <layer id="6" name="Ground" width="90" height="13">
+ <layer id="6" name="Ground" width="90" height="13" locked="1">
   <data encoding="base64" compression="zlib">
    eJztlFkKgDAMRCu4nMHlDIK3EE+stzN+CFIzGncL82DoT7HJZIxzhBBCCCHkCrEoEaXemX1Z1ANoffo9tqJe1D3wfi4qFJURric0Jo+LaN1j9WINtdN99j0P0es5w6ivxvCNoxlH91Get/KN9sqVHbT3TyPQm9OpZfjPebbWiGZm6UebK/J96e2el1uy5PkurHm21IhmZunnyFzP1nxnnuf9MDjbTvlLnkfn3Rh4
   </data>
  </layer>
- <objectgroup id="13" name="GroundObjects">
+ <objectgroup id="13" name="GroundObjects" locked="1">
   <object id="1" x="0" y="240" width="120" height="72"/>
   <object id="2" x="120" y="264" width="96" height="48"/>
   <object id="3" x="264" y="264" width="72" height="48"/>
@@ -51,7 +60,7 @@
   <object id="15" x="1608" y="216" width="96" height="96"/>
   <object id="16" x="1800" y="216" width="168" height="96"/>
  </objectgroup>
- <objectgroup id="14" name="TrapObjects">
+ <objectgroup id="14" name="TrapObjects" locked="1">
   <object id="20" x="96" y="227" width="22" height="12"/>
   <object id="21" x="480" y="226" width="22" height="12"/>
   <object id="22" x="528" y="203" width="22" height="12"/>
@@ -62,14 +71,20 @@
   <object id="27" x="1560" y="156" width="22" height="12"/>
   <object id="28" x="1584" y="180" width="22" height="12"/>
  </objectgroup>
- <objectgroup id="18" name="Tanks" offsetx="-240" offsety="48">
+ <objectgroup id="18" name="Tanks" locked="1" offsetx="-240" offsety="48">
   <object id="31" x="384" y="192" width="24" height="24"/>
   <object id="32" x="648" y="168" width="24" height="24"/>
   <object id="33" x="1632" y="72" width="24" height="24"/>
  </objectgroup>
- <objectgroup id="19" name="Barrier">
+ <objectgroup id="19" name="Barrier" locked="1">
   <object id="34" x="216" y="240" width="24" height="24"/>
   <object id="35" x="312" y="216" width="24" height="24"/>
   <object id="36" x="1320" y="120" width="24" height="24"/>
+  <object id="37" x="480" y="216" width="24" height="24"/>
+  <object id="38" x="96" y="240" width="24" height="24"/>
+  <object id="39" x="1488" y="120" width="24" height="24"/>
+ </objectgroup>
+ <objectgroup id="23" name="Goal" locked="1">
+  <object id="42" x="1872" y="168" width="24" height="48"/>
  </objectgroup>
 </map>

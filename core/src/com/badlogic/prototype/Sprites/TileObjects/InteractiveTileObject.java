@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.prototype.Prototype;
-import com.badlogic.prototype.Screens.Level1;
+import com.badlogic.prototype.Screens.Level;
 import com.badlogic.prototype.Sprites.Knight;
 
 public abstract class InteractiveTileObject {
@@ -21,12 +21,12 @@ public abstract class InteractiveTileObject {
     protected TiledMap map;
     protected Rectangle bounds;
     protected Body body;
-    protected Level1 screen;
+    protected Level screen;
     protected MapObject object;
 
     protected Fixture fixture;
 
-    public InteractiveTileObject(Level1 screen, MapObject object){
+    public InteractiveTileObject(Level screen, MapObject object){
         this.object = object;
         this.screen = screen;
         this.world = screen.getWorld();
