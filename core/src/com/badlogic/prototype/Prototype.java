@@ -3,6 +3,7 @@ package com.badlogic.prototype;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.prototype.Screens.Credits;
 import com.badlogic.prototype.Screens.MainMenu;
 
 public class Prototype extends Game {
