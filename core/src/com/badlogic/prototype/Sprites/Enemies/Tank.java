@@ -73,7 +73,6 @@ public class Tank extends com.badlogic.prototype.Sprites.Enemies.Enemy{
             world.destroyBody(b2body);
             destroyed = true;
             stateTimer = 0;
-            setAlpha(0f);
         }
         else if(currentState!=State.DEAD){
             b2body.setLinearVelocity(velocity);
@@ -83,10 +82,6 @@ public class Tank extends com.badlogic.prototype.Sprites.Enemies.Enemy{
 
         // Sets the current frame to the next frame in the current animation.
         setRegion(getFrame(elapsedTime, dt));
-        if(getFrame(elapsedTime,dt)==deathFrames.get(deathFrames.size-1))
-        {
-            setToDestroy=true;
-        }
     }
 
     // Returns the next frame in the current animation. Same as knight's getFrame() function.
@@ -142,9 +137,8 @@ public class Tank extends com.badlogic.prototype.Sprites.Enemies.Enemy{
         fdef.filter.maskBits = Prototype.GROUND_BIT |
                 Prototype.KNIGHT_BIT |
                 Prototype.BARRIER_BIT |
-                Prototype.ENEMY_BIT |
-                Prototype.ATTACK_BIT;
-
+                Prototype.ATTACK_BIT |
+                Prototype.ENEMY_BIT;
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
     }
@@ -159,6 +153,7 @@ public class Tank extends com.badlogic.prototype.Sprites.Enemies.Enemy{
     // If the tank is hit by the knight, the tank is set to be destroyed.
     @Override
     public void hit(){
+        setToDestroy = true;
         currentState = State.DEAD;
     }
 

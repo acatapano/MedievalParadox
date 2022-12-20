@@ -146,7 +146,7 @@ public class Knight extends Sprite {
                 region = ((TextureRegion) dyingAnimation.getKeyFrame(elapsedTime, false));
                 break;
             case ATTACK:
-                region=((TextureRegion)attackAnimation.getKeyFrame(elapsedTime,false));
+                region=((TextureRegion)attackAnimation.getKeyFrame(elapsedTime,true));
                 break;
             case JUMPING:
                 region = ((TextureRegion)jumpingAnimation.getKeyFrame(elapsedTime, true));
@@ -268,32 +268,42 @@ public class Knight extends Sprite {
         shape.dispose();
     }
 
+    // Draws the knight in the batch.
     public void draw(Batch batch){
         super.draw(batch);
     }
 
+    // If the player hits a spike, they die.
     public void hit(InteractiveTileObject spike){
         die();
     }
 
+    // If the player hits an enemy, they die.
     public void hitEnemy(Enemy enemy) { die(); }
 
+    // If the player completes the level it set levelComplete to true
     public void completeLevel() { levelComplete = true; }
 
+    // Returns if the level is complete or not.
     public boolean getLevelComplete() { return levelComplete; }
 
+    // Starts attack and sets attack body to active. Also plays attack sound once.
     public void beginAttack()
     {
         attacking=true;
         attack.setActive(true);
-        attackSound.play();
-
+        if(previousState != State.ATTACK)
+        {
+            attackSound.play();
+        }
     }
+    // Ends attack and sets attack body to inactive.
     public void endAttack()
     {
         attacking=false;
         attack.setActive(false);
     }
+    // Tracks if the player is attacking.
     public static boolean isViolent()
     {
         return attacking;

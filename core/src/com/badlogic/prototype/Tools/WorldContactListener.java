@@ -56,6 +56,7 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Knight) fixB.getUserData()).completeLevel();
                 break;
+            // If the attack box collides with an enemy, the enemy will die.
             case Prototype.ATTACK_BIT | Prototype.ENEMY_BIT:
                 if(fixA.getFilterData().categoryBits==Prototype.ATTACK_BIT)
                     ((Enemy) fixB.getUserData()).hit();

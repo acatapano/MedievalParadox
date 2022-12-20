@@ -74,6 +74,7 @@ public class Hud implements Disposable{
         stage.addActor(table);
     }
 
+    // Updates the timer each frame.
     public void update(float dt){
         timeCount += dt;
         if(timeCount >= 1){

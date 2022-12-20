@@ -58,7 +58,7 @@ public class ControlsMenu implements Screen
         game.font.getData().setScale(1.5f);
         game.font.draw(game.batch, "RUN...........Left and Right Arrow Keys or A and D", 55, 380);
         game.font.draw(game.batch, "JUMP.........Spacebar, W, or Up Arrow Key", 55, 350);
-        game.font.draw(game.batch, "ATTACK.....Enter or Left-Ctrl", 55, 320);
+        game.font.draw(game.batch, "ATTACK.....Z or Left-Ctrl", 55, 320);
         game.font.draw(game.batch, "TIPS:", 55, 290);
         game.font.draw(game.batch, "  -  Avoid being struck by enemies to stay alive", 55, 260);
         game.font.draw(game.batch, "  -  Jump over spikes and dangerous gaps", 55, 230);
