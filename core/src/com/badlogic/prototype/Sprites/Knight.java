@@ -20,7 +20,7 @@ import com.badlogic.prototype.Sprites.TileObjects.InteractiveTileObject;
 
 public class Knight extends Sprite {
     // States
-    public enum State { FALLING, JUMPING, STANDING, WALKING, RUNNING, DEAD };
+    public enum State { FALLING, JUMPING, STANDING, WALKING, RUNNING, DEAD, ATTACK };
     public State currentState;
     public State previousState;
 
@@ -228,4 +228,9 @@ public class Knight extends Sprite {
     public void completeLevel() { levelComplete = true; }
 
     public boolean getLevelComplete() { return levelComplete; }
+
+    public void attack()
+    {
+
+    }
 }
