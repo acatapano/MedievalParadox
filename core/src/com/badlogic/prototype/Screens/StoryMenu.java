@@ -112,5 +112,6 @@ public class StoryMenu implements Screen
     @Override
     public void dispose() {
         backgroundTex.dispose();
+        music.dispose();
     }
 }

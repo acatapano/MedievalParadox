@@ -81,7 +81,7 @@ public class Credits implements Screen {
 
         if (Gdx.input.justTouched()) {
             music.stop();
-            game.setScreen(new MainMenu(game));
+            game.setScreen(new MainMenu(game, music));
             dispose();
         }
 

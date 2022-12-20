@@ -1,6 +1,8 @@
 package com.badlogic.prototype;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.prototype.Screens.Credits;
@@ -27,12 +29,20 @@ public class Prototype extends Game {
 	// Sets up game font for all menus and Hud.
 	public BitmapFont font;
 
+	// Sets up Music.
+	Music music;
+
 	// Creates batch, font, and sets the game screen to MainMenu.
 	@Override
 	public void create () {
+		// Creates music
+		this.music = Gdx.audio.newMusic(Gdx.files.internal("2019-06-14_-_Warm_Light_-_David_Fesliyan.mp3"));
+		this.music.setVolume(0.3f);
+		this.music.setLooping(true);
+		this.music.play();
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		setScreen(new MainMenu(this));
+		setScreen(new MainMenu(this, music));
 	}
 
 	// Disposes of the game, batch, and font when the game is closed.
@@ -41,6 +51,7 @@ public class Prototype extends Game {
 		super.dispose();
 		batch.dispose();
 		font.dispose();
+		music.dispose();
 	}
 
 	// Renders the game.
