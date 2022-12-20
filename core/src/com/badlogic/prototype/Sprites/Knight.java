@@ -27,6 +27,7 @@ public class Knight extends Sprite {
     // Box2D
     public World world;
     public Body b2body;
+    public Body attack;
 
     // Atlas and Animations
     private TextureAtlas textureAtlas;
@@ -101,6 +102,16 @@ public class Knight extends Sprite {
 
         //setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setPosition(b2body.getPosition().x - getWidth()*1.5f, b2body.getPosition().y - getHeight()/1.1f);
+
+        //attack box thing
+        if(runningRight)
+        {
+            attack.setTransform(new Vector2(b2body.getPosition().x+(10/Prototype.PPM),b2body.getPosition().y),0f);
+        }
+        else
+        {
+            attack.setTransform(new Vector2(b2body.getPosition().x-(10/Prototype.PPM),b2body.getPosition().y),0f);
+        }
 
         //update sprite with the correct frame depending on knight's current action
         setRegion(getFrame(elapsedTime, dt));
@@ -200,6 +211,10 @@ public class Knight extends Sprite {
         bdef.position.set(getX() + getWidth() / 2, getY() + getHeight() / 2);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
+        BodyDef adef = new BodyDef();
+        adef.position.set(getX()+getWidth()+(10/Prototype.PPM),getY()+getHeight()/2);
+        adef.type=BodyDef.BodyType.KinematicBody;
+        attack=world.createBody(adef);
 
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
@@ -212,6 +227,15 @@ public class Knight extends Sprite {
         fdef.shape = shape;
         fdef.friction = .5f;
         b2body.createFixture(fdef).setUserData(this);
+        FixtureDef afdef = new FixtureDef();
+        afdef.filter.categoryBits=Prototype.ATTACK_BIT;
+        afdef.filter.maskBits=Prototype.ENEMY_BIT;
+        afdef.isSensor=true;
+        afdef.shape=shape;
+        afdef.friction=0f;
+        afdef.density=0f;
+        attack.createFixture(afdef);
+        shape.dispose();
     }
 
     public void draw(Batch batch){
