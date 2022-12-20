@@ -166,9 +166,9 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
 
         elapsedTime += delta;
 
-        /*if (player.LevelComplete()) {
-            game.setScreen(new Win(game));
-        }*/
+        if (player.getLevelComplete()) {
+            game.setScreen(new Credits(game));
+        }
 
     }
 

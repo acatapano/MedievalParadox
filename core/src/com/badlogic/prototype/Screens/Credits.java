@@ -9,15 +9,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.prototype.Prototype;
 
-public class ControlsMenu implements Screen
-{
+public class Credits implements Screen {
     final Prototype game;
     OrthographicCamera camera;
 
     Texture backgroundTex;
     Sprite backgroundSprite;
 
-    public ControlsMenu(Prototype game)
+    public Credits(Prototype game)
     {
         this.game = game;
 
@@ -46,35 +45,32 @@ public class ControlsMenu implements Screen
         backgroundSprite.draw(game.batch);
 
         // Header
-        game.font.draw(game.batch, "CONTROLS", 55, 430);
+        game.font.draw(game.batch, "Congratulations! You saved the King!", 55, 460);
 
         // Story info
         game.font.getData().setScale(1.5f);
-        game.font.draw(game.batch, "WALK........Left and Right Arrow Keys, or A and D", 55, 380);
-        game.font.draw(game.batch, "RUN...........Hold Shift while Walking", 55, 350);
-        game.font.draw(game.batch, "JUMP.........Spacebar or W", 55, 320);
-        game.font.draw(game.batch, "ATTACK.....Enter or Left-Ctrl", 55, 290);
-        game.font.draw(game.batch, "TIPS:", 55, 260);
-        game.font.draw(game.batch, "  -  Avoid being struck by enemies to stay alive", 55, 230);
-        game.font.draw(game.batch, "  -  Recover health by finding Hearts", 55, 200);
-        game.font.draw(game.batch, "  -  Jump over spikes and dangerous gaps", 55, 170);
-        game.font.draw(game.batch, "  -  Attack robots to destroy them", 55, 140);
-        game.font.draw(game.batch, "  -  Reach the end of the level to progress", 55, 110);
+        game.font.draw(game.batch, "CREDITS", 55, 425);
+        game.font.draw(game.batch, "Assets:", 55, 400);
+        game.font.draw(game.batch, "Knight: Generic Character Asset v 0.2 - brullov", 55, 375);
+        game.font.draw(game.batch, "Level 1: Oak Woods - Environment Asset - brullov", 55, 350);
+        game.font.draw(game.batch, "Spikes: Rocky Roads - Essssam", 55, 325);
+        game.font.draw(game.batch, "Level 2: Pixel Fantasy \"Caves\" - Szadi art", 55, 300);
+        game.font.draw(game.batch, "Level 3: 16x16 Dungeon Tileset - Genewheel", 55, 275);
+        game.font.draw(game.batch, "King: Pixel King - BalduranCZ", 55, 250);
+        game.font.draw(game.batch, "PARADOXICAL PRODUCTIONS:", 55, 200);
+        game.font.draw(game.batch, "Andrew Catapano", 55, 175);
+        game.font.draw(game.batch, "Anthony Cross", 55, 150);
+        game.font.draw(game.batch, "John Costa", 55, 125);
+        game.font.draw(game.batch, "Frankie Gleeson", 55, 100);
 
         game.font.getData().setScale(1.2f);
-        game.font.draw(game.batch, "Click or tap anywhere to start the game", 55, 70);
-        game.font.draw(game.batch, "Press Esc to go back", 55, 45);
+        game.font.draw(game.batch, "Click anywhere to return to the Main Menu.", 55, 50);
 
         game.batch.end();
         // end batch
 
         if (Gdx.input.justTouched()) {
-            game.setScreen(new Level1(game)); // change this line to skip levels
-            dispose();
-        }
-        // press Esc to go back to story screen
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            game.setScreen(new StoryMenu(game));
+            game.setScreen(new MainMenu(game)); // change this line to skip levels
             dispose();
         }
 
