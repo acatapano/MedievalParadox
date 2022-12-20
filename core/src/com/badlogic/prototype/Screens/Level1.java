@@ -2,10 +2,8 @@ package com.badlogic.prototype.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -21,26 +19,25 @@ import com.badlogic.prototype.Sprites.Knight;
 import com.badlogic.prototype.Tools.B2WorldCreator;
 import com.badlogic.prototype.Tools.WorldContactListener;
 
-//public class Level1 implements Screen{
-public class Level1 extends com.badlogic.prototype.Screens.Level
+public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1 a subclass of the abstract class Level.
 {
-    //Reference to Game, used to set Screens
+    // Reference to Game, used to set Screens
     private Prototype game;
 
-    //basic PlayScreen variables
+    // Sets up camera, Viewport, and Hud for the level screen.
     private OrthographicCamera gamecam;
     private Viewport gamePort;
     private Hud hud;
 
-    //Tiled map variables
-    private TmxMapLoader maploader;
-    private TiledMap map;
-    private OrthogonalTiledMapRenderer renderer;
+    // Tile map variables:
+    private TmxMapLoader maploader;                 // Used to load the tilemap.
+    private TiledMap map;                           // Used to hold the tile map.
+    private OrthogonalTiledMapRenderer renderer;    // Used to render the tile map.
 
-    //Box2d variables
-    private World world;
-    private Box2DDebugRenderer b2dr;
-    private B2WorldCreator creator;
+    //Box2d variables:
+    private World world;                            // Used to contain all box2d bodies and set up physics.
+    private Box2DDebugRenderer b2dr;                // Used to render debug lines.
+    private B2WorldCreator creator;                 //
 
     //Sprites
     private Knight player;

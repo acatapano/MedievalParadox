@@ -64,7 +64,7 @@ public class Level3 extends com.badlogic.prototype.Screens.Level implements Scre
         gamePort = new FitViewport(Prototype.V_WIDTH / Prototype.PPM, Prototype.V_HEIGHT / Prototype.PPM, gamecam);
 
         //create game HUD
-        hud = new Hud(game.batch, "2");
+        hud = new Hud(game.batch, "3");
 
         //Load map and setup map renderer
         maploader = new TmxMapLoader();
