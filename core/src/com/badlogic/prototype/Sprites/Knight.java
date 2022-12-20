@@ -51,6 +51,7 @@ public class Knight extends Sprite {
     private float stateTimer;
     private boolean runningRight;
     private boolean knightIsDead;
+    public static boolean attacking;
     private Level screen;
 
     boolean levelComplete;
@@ -63,6 +64,7 @@ public class Knight extends Sprite {
         previousState = State.STANDING;
         stateTimer = 0;
         runningRight = true;
+        attacking=false;
         levelComplete = false;
 
         textureAtlas = new TextureAtlas(Gdx.files.internal("player/blue1.atlas"));
@@ -128,6 +130,9 @@ public class Knight extends Sprite {
             case DEAD:
                 region = ((TextureRegion) dyingAnimation.getKeyFrame(elapsedTime, false));
                 break;
+            case ATTACK:
+                region=((TextureRegion)attackAnimation.getKeyFrame(elapsedTime,false));
+                break;
             case JUMPING:
                 region = ((TextureRegion)jumpingAnimation.getKeyFrame(elapsedTime, true));
                 break;
@@ -171,6 +176,8 @@ public class Knight extends Sprite {
         //if knight is going positive in Y-Axis he is jumping... or if he just jumped and is falling remain in jump state
         if(knightIsDead)
             return State.DEAD;
+        else if(attacking)
+            return State.ATTACK;
         else if((b2body.getLinearVelocity().y > 0 && currentState == State.JUMPING) || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
             return State.JUMPING;
         //if negative in Y-Axis knight is falling
@@ -252,8 +259,16 @@ public class Knight extends Sprite {
 
     public boolean getLevelComplete() { return levelComplete; }
 
-    public void attack()
+    public void beginAttack()
     {
-
+        attacking=true;
+    }
+    public void endAttack()
+    {
+        attacking=false;
+    }
+    public static boolean isViolent()
+    {
+        return attacking;
     }
 }

@@ -144,7 +144,7 @@ public class Tank extends com.badlogic.prototype.Sprites.Enemies.Enemy{
 
     // If the tank is hit by the knight, the tank is set to be destroyed.
     @Override
-    public void hit(Knight knight){
+    public void hit(){
         setToDestroy = true;
         currentState = State.DEAD;
     }

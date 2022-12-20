@@ -56,6 +56,12 @@ public class WorldContactListener implements ContactListener {
                 else
                     ((Knight) fixB.getUserData()).completeLevel();
                 break;
+            case Prototype.ATTACK_BIT | Prototype.ENEMY_BIT:
+                if(fixA.getFilterData().categoryBits==Prototype.ATTACK_BIT && Knight.isViolent())
+                    ((Enemy) fixB.getUserData()).hit();
+                else if(Knight.isViolent())
+                    ((Enemy) fixA.getUserData()).hit();
+                break;
         }
     }
 

@@ -48,6 +48,7 @@ public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1
     private Knight player;                          // Holds the player body.
 
     private float elapsedTime;                      // Holds the time elapsed since the level was started.
+    private int violenceTime=11;                     // when has the knight realized that peace isn't an option? (counts frames)
 
     Music music;
 
@@ -107,6 +108,10 @@ public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1
             // If the player presses the left arrow key or "A" and the knight's current velocity is <= -2 the knight will move right by applying a negative velocity in the x direction to its body.
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2 || Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
                 player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
+            if(Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
+                player.beginAttack();
+                violenceTime=0;
+            }
         }
     }
 
@@ -119,6 +124,14 @@ public class Level1 extends com.badlogic.prototype.Screens.Level // Makes Level1
 
         // Updates the player.
         player.update(elapsedTime, dt);
+        if(player.isViolent() && violenceTime<=10)
+        {
+            violenceTime+=1;
+        }
+        else if(player.isViolent() && violenceTime>10)
+        {
+            player.endAttack();
+        }
         // Updates each enemy in the level.
         for(Enemy enemy : creator.getEnemies()){
             enemy.update(elapsedTime, dt);

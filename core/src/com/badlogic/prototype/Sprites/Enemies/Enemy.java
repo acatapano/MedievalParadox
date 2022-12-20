@@ -32,7 +32,7 @@ public abstract class Enemy extends Sprite {
     // Abstract methods for all enemies.
     protected abstract void defineEnemy(float xAdjust, float yAdjust);
     public abstract void update(float elapsedTime, float dt);
-    public abstract void hit(Knight knight);
+    public abstract void hit();
     public abstract void hitByEnemy(Enemy enemy);
 
     // Reverses the enmies velocity so that it moves the opposite direction.
